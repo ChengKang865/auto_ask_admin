@@ -1,0 +1,69 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">快递模板管理</h1>
+            <!--<span class="mainDescription"></span>-->
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start: 快递模板列表 -->
+<div class="container-fluid container-fullw" ng-controller="expressTemplateListCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row margin-bottom-30">
+            <div class="col-md-3">
+                <label>模板名称</label>
+                <input placeholder="模板名称" type="text" class="form-control" ng-model="criteria.name"/>
+            </div>
+
+            <div class="col-md-3">
+                <label>
+                    运送方式
+                </label>
+                <select class="form-control" id="expressTypeId" name="expressTypeId" ng-model="criteria.expressTypeId">
+                    <option value="">不限</option>
+                    <option ng-repeat="p in notPageExpressTypeList" value="{{p.id}}">{{p.cnName}}</option>
+                </select>
+            </div>
+
+            <div class="col-md-1 margin-top-22">
+                <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i class="fa fa-find"></i>查询</button>
+            </div>
+        </div>
+
+        <!-- 添加按钮 -->
+        <div class="row margin-bottom-10 text-right">
+            <a href="#/app/express/templateAdd"
+               class="btn btn-wide btn-ask-primary"><i class="fa fa-plus"></i>添加模板</a>
+        </div>
+
+        <div class="row">
+            <div class="table-responsive">
+                <table ng-table="tableParams" class="table" cg-busy="{promise:loadingPromise}">
+                    <tbody ng-repeat="p in data">
+                            <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                            <td class="rowTd" data-title="'模板名称'">{{p.name}}</td>
+                            <td class="rowTd" data-title="'运送方式'">{{p.expressTypeName}}</td>
+                            <td class="rowTd" data-title="'首重'">{{p.firstHeavy}}</td>
+                            <td class="rowTd" data-title="'首重快递费'">{{p.firstHeavyPrice}}</td>
+                            <td class="rowTd" data-title="'续重'">{{p.continuedHeavy}}</td>
+                            <td class="rowTd" data-title="'续重快递费'">{{p.continuedHeavyPrice}}</td>
+                            <td class="rowTd text-right">
+                                <a href="#/app/express/templateModify/{{p.id}}"  class="btn btn-ask-modify btn-sm">修改</a>
+                            </td>
+                            <td class="rowTd text-right">
+                                <a href="#/app/express/templateDetail/{{p.id}}" class="btn btn-ask-view btn-sm">详情</a>
+                            </td>
+                            <td class="rowTd text-right">
+                                <input type=button class="btn btn-ask-del btn-sm" id="delRowBtn{{p.id}}" value="删除" ng-click="delete(p.id)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

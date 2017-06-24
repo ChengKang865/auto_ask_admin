@@ -1,0 +1,91 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">开票信息</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!--start: 活动管理-->
+<div class="container-fluid container-fullw bg-white" ng-controller="invoiceDetailCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row padding-top-20">
+            <div class="col-md-12">
+                <!--start: 添加活动表单-->
+                <form name="Form" id="form1" novalidate class="autoask-form">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group margin-top-remove">
+                                <div class="col-md-12">
+                                    <table class="autoask-table table">
+                                        <caption class="clearfix">开票信息
+                                            <a href="#/app/serviceProvider/invoice/modify"
+                                               class="pull-right btn btn-wide btn-ask-primary"><i class="fa fa-plus"></i>编辑</a>
+                                        </caption>
+                                        <tbody>
+                                        <tr ng-class="{'has-error':Form.contact.$dirty && Form.contact.$invalid, 'has-success':Form.contact.$valid}">
+                                            <td class="col-md-2">公司名称</td>
+                                            <td class="col-md-10">
+                                                <input type="text" placeholder="公司名称" class="col-md-3"
+                                                       name="company"
+                                                       ng-model="vatInvoice.company"/>
+                                            </td>
+                                        </tr>
+                                        <tr ng-class="{'has-error':Form.taxSerial.$dirty && Form.taxSerial.$invalid, 'has-success':Form.taxSerial.$valid}">
+                                            <td class="col-md-2">税号</td>
+                                            <td class="col-md-10">
+                                                <input type="text" placeholder="公司名称" class="col-md-3"
+                                                       name="taxSerial"
+                                                       ng-model="vatInvoice.taxSerial"/>
+                                            </td>
+                                        </tr>
+                                        <tr ng-class="{'has-error':Form.invoiceAddress.$dirty && Form.invoiceAddress.$invalid, 'has-success':Form.invoiceAddress.$valid}">
+                                            <td class="col-md-2">地址</td>
+                                            <td class="col-md-10">
+                                                <input type="text" placeholder="地址" class="col-md-3"
+                                                       name="invoiceAddress"
+                                                       ng-model="vatInvoice.address"/>
+                                            </td>
+                                        </tr>
+                                        <tr ng-class="{'has-error':Form.invoicePhone.$dirty && Form.invoicePhone.$invalid, 'has-success':Form.invoicePhone.$valid}">
+                                            <td class="col-md-2">电话</td>
+                                            <td class="col-md-10">
+                                                <input type="text" placeholder="电话" class="col-md-3"
+                                                       name="invoicePhone"
+                                                       ng-model="vatInvoice.phone"/>
+                                            </td>
+                                        </tr>
+                                        <tr ng-class="{'has-error':Form.bankName.$dirty && Form.bankName.$invalid, 'has-success':Form.bankName.$valid}">
+                                            <td class="col-md-2">银行</td>
+                                            <td class="col-md-10">
+                                                <input type="text" placeholder="银行" class="col-md-3"
+                                                       name="bankName"
+                                                       ng-model="vatInvoice.bankName"/>
+                                            </td>
+                                        </tr>
+                                        <tr ng-class="{'has-error':Form.bankAccount.$dirty && Form.bankAccount.$invalid, 'has-success':Form.bankAccount.$valid}">
+                                            <td class="col-md-2">账号</td>
+                                            <td class="col-md-10">
+                                                <input type="text" placeholder="账号" class="col-md-3"
+                                                       name="bankAccount"
+                                                       ng-model="vatInvoice.account"/>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!--end: 添加活动表单-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--end: 活动管理-->
+
+

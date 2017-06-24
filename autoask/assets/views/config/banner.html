@@ -1,0 +1,111 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">banner管理</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+<!-- start: FORM VALIDATION -->
+<div class="container-fluid container-fullw bg-white">
+    <div class="col-md-12">
+        <div ng-controller="bannerCtrl" cg-busy="{promise:loadingPromise}">
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">渠道</span>
+                        <select class="form-control" ng-model="channel" ng-init="channel = 'pc'" required>
+                            <option value="h5">M站</option>
+                            <option value="pc">PC</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-wide btn-primary" ng-click="query()">查询</button>
+                </div>
+            </div>
+
+            <div>
+                <form role="form" class="form-horizontal">
+                    <div ng-repeat="banner in bannerList" style="margin-top:30px;">
+                        <!-- 产品类别调整 -->
+                        <div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">
+                                            链接地址
+                                        </label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" ng-model="banner.linkUrl" class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">
+                                            排序
+                                        </label>
+
+                                        <div class="col-sm-10">
+                                            <input type="number" ng-model="banner.sort" class="form-control"
+                                                   ng-pattern="/[0-9]/"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="text" ng-model="banner.channel" ng-init="banner.channel = channel"
+                                       style="display: none;"/>
+                            </div>
+                            <div class="row" style="margin-top:20px;">
+                                <div class="col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label class="col-sm-2 control-label">
+                                            图片:
+                                        </label>
+
+                                        <div class="col-sm-3">
+                                            <a href="javascript:;" class="a-upload form-control">
+                                                <input type="file" class="upload_file" placeholder="上传图片"
+                                                       id="img-{{$index}}"
+                                                       list-bind="bannerList" list-index="{{$index}}"
+                                                       onchange="angular.element(this).scope().uploadImage(this);">
+                                                上传图片
+                                            </a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <img ng-src="{{banner.picUrl}}" width="100%">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <div class="col-sm-3">
+                                            <button class="btn btn-danger" ng-click="deleteBanner($index)">删除</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:20px;">
+                        <div class="col-md-6">
+                            <button class="btn btn-wide btn-primary" ng-click="addBanner()">新增</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="row" style="margin-top: 40px;">
+                <div class="pull-right margin-right-15">
+                    <button class="btn btn-wide btn-success" ng-click="submit()">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end: FORM VALIDATION -->
+</div>

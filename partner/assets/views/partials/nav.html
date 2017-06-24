@@ -1,0 +1,238 @@
+<!-- start: MAIN NAVIGATION MENU -->
+<div class="navbar-title">
+    <span></span>
+</div>
+<ul class="main-navigation-menu">
+    <!--<li ng-class="{'active open':$state.includes('app.merchant')}" data-ng-show="user.role == 'edit'">-->
+    <li ui-sref-active="active">
+        <a ui-sref="app.face">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-home"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 数据报表 </span>
+                </div>
+            </div>
+        </a>
+    </li>
+
+    <li ng-class="{'active open':$state.includes('app.account')}">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title">账户管理</span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.account.passwordModify">
+                    <span class="title"> 修改密码 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+
+    <li ng-class="{'active open':$state.includes('app.partnerInfo')}">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title">本店信息</span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.partnerInfo.detail">
+                    <span class="title"> 基本信息 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.partnerInfo.invoiceDetail">
+                    <span class="title"> 开票信息 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.partnerInfo.qrCodeDetail">
+                    <span class="title"> 绑定二维码 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{'active open':$state.includes('app.merchant')}">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 合作伙伴 </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.merchant.serviceProvider">
+                    <span class="title"> 服务店 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.merchant.outlets">
+                    <span class="title"> 分销点 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.merchant.mechanic">
+                    <span class="title"> 维修工 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+
+    <li ng-class="{'active open':$state.includes('app.order')}">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 订单管理 </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.order.onlineList">
+                    <span class="title"> 线上订单 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.order.onlineToDealList">
+                    <span class="title"> 线上未处理订单 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.order.offlineList">
+                    <span class="title"> 服务店全部订单 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.order.offlinePendingList">
+                    <span class="title"> 服务店无货订单 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{'active open':$state.includes('app.share')}">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 分成管理 </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.share.selfAccountDetail">
+                    <span class="title"> 账户管理 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.share.extract">
+                    <span class="title"> 提现历史 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.share.partnerList">
+                    <span class="title"> 本店分成 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.share.serviceProviderList">
+                    <span class="title"> 服务店分成 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.share.mechanicList">
+                    <span class="title"> 维修工红包 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.share.outletsList">
+                    <span class="title"> 分销点分成 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{'active open':$state.includes('app.goodsNum')}">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title">库存管理 </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.goodsNum.addList">
+                    <span class="title">发货管理 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.goodsNum.subList">
+                    <span class="title">退货管理 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.goodsNum.partnerList">
+                    <span class="title"> 本店库存 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.goodsNum.serviceProviderList">
+                    <span class="title"> 服务店库存 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{'active open':$state.includes('app.noticeItem')}">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 公告管理 </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.noticeItem.list">
+                    <span class="title"> 公告列表 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
+<!-- end: MAIN NAVIGATION MENU -->

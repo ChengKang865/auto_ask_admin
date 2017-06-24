@@ -1,0 +1,58 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">产品类别管理</h1>
+            <!--<span class="mainDescription"></span>-->
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start: 商品种类列表 -->
+<div class="container-fluid container-fullw">
+    <div class="row">
+        <div class="col-md-12">
+            <div ng-controller="productCategoryCtrl">
+                <div class="row margin-bottom-10">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button class="btn btn-wide btn-ask-primary" ng-click="add()"><i class="fa fa-plus"></i>添加产品种类
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table ng-table="tableParams" class="table" cg-busy="{promise:loadingPromise}">
+                        <tbody ng-repeat="p in data">
+                        <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                            <td class="rowTd" data-title="'种类名称'">{{p.name}}</td>
+                            <td class="rowTd" data-title="'名称缩写'">{{p.nameEn}}</td>
+                            <td class="rowTd" data-title="'服务费'">{{p.serviceFee}}</td>
+                            <td class="rowTd" data-title="'创建时间'">{{p.createTime}}</td>
+                            <td class="rowTd" data-title="'创建者id号'">{{p.creatorId}}</td>
+                            <td class="rowTd text-right">
+                                <input type=button class="btn btn-ask-view btn-sm"
+                                       id="viewRowBtn{{p.productCategoryId}}"
+                                       value="详情" ng-click="info(p.productCategoryId)">
+                            </td>
+                            <td class="rowTd text-right">
+                                <input type=button class="btn btn-ask-modify btn-sm"
+                                       id="editRowBtn{{p.productCategoryId}}"
+                                       value="修改" ng-click="edit(p.productCategoryId)">
+                            </td>
+                            <td class="rowTd text-right">
+                                <input type=button class="btn btn-ask-del btn-sm"
+                                       id="delRowBtn{{p.productCategoryId}}"
+                                       value="删除" ng-click="delete(p.productCategoryId)">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: 合作伙伴列表 -->

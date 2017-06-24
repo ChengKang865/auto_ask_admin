@@ -1,0 +1,107 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">卡片列表</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<div class="container-fluid container-fullw" ng-controller="cardItemListCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row">
+            <!--start: 查询 -->
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-12 margin-bottom-5 clearfix">
+                        <div class="col-md-2 padding-left-0">
+                            <label>
+                                卡号
+                            </label>
+                            <input type="text" class="form-control" placeholder="卡券名称" ng-model="criteria.cardId"/>
+                        </div>
+
+                        <div class="col-md-2 padding-left-0">
+                            <label>
+                                序列号
+                            </label>
+                            <input type="number" class="form-control" placeholder="卡券名称" ng-model="criteria.typeSort"/>
+                        </div>
+
+                        <div class="col-md-2 padding-left-0">
+                            <label>
+                                状态
+                            </label>
+                            <select class="form-control" id="status" name="status" ng-model="criteria.status">
+                                <option value="">不限</option>
+                                <option value="to_check">未激活</option>
+                                <option value="checked">已激活</option>
+                                <option value="to_use">锁定</option>
+                                <option value="used">已使用</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-2">
+                            <button class="btn btn-wide btn-ask-primary margin-top-22" ng-click="query()"><i
+                                    class="fa fa-find"></i>查询
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 margin-bottom-5 clearfix">
+
+                        <div class="col-md-2 padding-left-0">
+                            <label>
+                                起始序号
+                            </label>
+                            <input type="text" class="form-control" placeholder="起始序号" ng-model="startNum"/>
+                        </div>
+
+                        <div class="col-md-2 padding-left-0">
+                            <label>
+                                终止序号
+                            </label>
+                            <input type="number" class="form-control" placeholder="终止序号" ng-model="endNum"/>
+                        </div>
+
+                        <div class="col-md-2">
+                            <button class="btn btn-wide btn-ask-primary margin-top-22" ng-click="batchActive()"><i
+                                    class="fa fa-find"></i>批量激活
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end: 查询 -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <!--start: 卡片类别列表-->
+                        <table ng-table="tableParams" class="table">
+                            <tbody ng-repeat="item in cardList">
+                            <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                                <td class="rowTd" data-title="'卡号'">{{item.cardId}}</td>
+                                <td class="rowTd" data-title="'排序'">{{item.typeSort}}</td>
+                                <td class="rowTd" data-title="'状态'">{{item.status | cardItemStatusZh}}
+                                </td>
+                                <td class="rowId" data-title="'用户'">{{item.status === 'used' ? item.phone:''}}</td>
+                                <td class="rowId" data-title="'关联订单'">{{item.status === 'used' ? item.orderId :''}}</td>
+                                <td class="rowId text-right">
+                                    <input type=button class="btn btn-ask-primary btn-sm margin-right-20" value="激活"
+                                           ng-if="!item.deleteFlag && item.status == 'to_check'"
+                                           ng-click="activeCardItem(item.cardId)">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!--end: 卡片类别列表结束-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

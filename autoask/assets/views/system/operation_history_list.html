@@ -1,0 +1,57 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">操作日志</h1>
+            <!--<span class="mainDescription"></span>-->
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start: 订单列表 -->
+<div class="container-fluid container-fullw" ng-controller="operationHistoryListCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row margin-bottom-30">
+            <div class="col-md-3 padding-left-0">
+                <label for="startTime">
+                    起始日期
+                </label>
+                <input id="startTime" ng-model="criteria.startTime" class="form-control"  onclick="WdatePicker({onpicked: function(){$(this).trigger('change')}})"/>
+            </div>
+            <div class="col-md-3">
+                <label for="endTime">
+                    结束日期
+                </label>
+                <input id="endTime" ng-model="criteria.endTime" class="form-control"  onclick="WdatePicker({onpicked: function(){$(this).trigger('change')}})"/>
+
+            </div>
+            <div class="col-md-3">
+                <label for="">账号</label>
+                <input placeholder="账号" type="text"  class="form-control" ng-model="criteria.orderId" />
+            </div>
+
+            <div class="col-md-1 margin-top-22">
+                <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i class="fa fa-find"></i>查询</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="table-responsive">
+                <table ng-table="tableParams" class="table" cg-busy="{promise:loadingPromise}">
+                    <tbody ng-repeat="p in data">
+                    <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                        <td class="rowTd" data-title="'操作时间'">{{p.orderId}}</td>
+                        <td class="rowTd" data-title="'IP地址'">{{p.createTime}}</td>
+                        <td class="rowTd" data-title="'角色'">{{p.user.phone}}</td>
+                        <td class="rowTd" data-title="'账号'">{{p.user.phone}}</td>
+                        <td class="rowTd" data-title="'操作内容'">{{p.user.phone}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: 合作伙伴列表 -->

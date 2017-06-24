@@ -1,0 +1,178 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">退货</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<div class="container-fluid container-fullw bg-white" ng-controller="goodsNumRecordChangeCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row" style="padding-top: 20px">
+            <div class="col-md-12">
+                <!--start: 添加退货单号-->
+                <form name="Form" id="form1" novalidate class="autoask-form">
+                    <input type="text" style="display: none;" ng-model="data.addType" ng-init="data.addType = false"/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend>
+                                    退货
+                                </legend>
+                                <!--产品类别名称-->
+                                <div class="form-group margin-top-remove"
+                                     ng-class="{'has-error':Form.serial.$dirty && Form.serial.$invalid, 'has-success':Form.serial.$valid}">
+                                    <label class="control-label col-md-3">
+                                        退货单号 <span class="symbol required"></span>
+                                    </label>
+                                    <input type="text" placeholder="退货单号" class="col-md-3"
+                                           name="serial" required ng-model="data.serial"/>
+                                </div>
+
+                                <div class="form-group"
+                                     ng-class="{'has-error':Form.recordTime.$dirty && Form.recordTime.$invalid, 'has-success':Form.recordTime.$valid}">
+                                    <label class="control-label col-md-3">
+                                        时间 <span class="symbol required"></span>
+                                    </label>
+                                    <input id="recordTime" name="recordTime" type="text" class="col-md-3"
+                                           ng-model="data.recordTime" required/>
+                                </div>
+
+                                <div class="form-group "
+                                     ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                    <label class="control-label col-md-3">
+                                        商品信息
+                                    </label>
+
+                                    <div class="col-md-9">
+                                        <div class="col-md-9 padding-left-0">
+                                            <table class="table padding-left-0">
+                                                <thead>
+                                                <tr>
+                                                    <th class="col-md-3 padding-left-0">产品类别</th>
+                                                    <th class="col-md-3 padding-left-0">产品名</th>
+                                                    <th class="col-md-3 padding-left-0">商品</th>
+                                                    <th class="col-md-3 padding-left-0">数量</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody ng-repeat="item in data.goodsInfoList track by $index">
+
+                                                <tr ng-class-odd="'odd'" ng-class-even="'even'" data-title="'类别'">
+                                                    <td class="col-md-3 padding-left-0">
+                                                        <span>{{item.productCategoryName}}</span>
+                                                    </td>
+                                                    <td class="col-md-3 padding-left-0" data-title="'类别'">
+                                                        <span>{{item.productName}}</span>
+                                                    </td>
+                                                    <td class="col-md-3 padding-left-0" data-title="'类别'">
+                                                        <span>{{item.goodsName}}</span>
+                                                    </td>
+                                                    <td class="col-md-3 padding-left-0" data-title="'类别'">
+                                                        <span>{{item.num}}</span>
+                                                    </td>
+                                                    <td class="col-md-1 padding-left-0">
+                                                        <button class="btn btn-ask-primary btn-sm"
+                                                                ng-click="removeGoods($index)">删除
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <!--start: 添加-->
+                                        <div class="col-md-9 padding-left-0">
+                                            <table class="table padding-left-0">
+                                                <tbody>
+                                                <tr class="add-row">
+                                                    <td class="col-md-3 padding-left-0">
+                                                        <select class="form-control"
+                                                                name="productCategoryId"
+                                                                ng-model="newGoodsInfo.productCategory"
+                                                                ng-change="productCategoryChanged(newGoodsInfo)">
+                                                            <option value="" disabled>所属产品类别</option>
+                                                            <option ng-repeat="p in productCategories"
+                                                                    value="{{p}}">{{p.name}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="col-md-3 padding-left-0">
+                                                        <select class="form-control" name="productId"
+                                                                ng-model="newGoodsInfo.product"
+                                                                ng-change="changeProduct(newGoodsInfo)">
+                                                            <option value="" disabled>所属产品</option>
+                                                            <option ng-repeat="p in newGoodsInfo.products"
+                                                                    value="{{p}}">
+                                                                {{p.name}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="col-md-3 padding-left-0">
+                                                        <select class="form-control" name="goodsId"
+                                                                ng-model="newGoodsInfo.goods">
+                                                            <option value="" disabled>所属商品</option>
+                                                            <option ng-repeat="g in newGoodsInfo.goodsList"
+                                                                    value="{{g}}">
+                                                                {{g.name}}
+                                                        </select>
+                                                    </td>
+                                                    <td class="col-md-3 padding-left-0">
+                                                        <input type="number" ng-model="newGoodsInfo.num"/>
+                                                    </td>
+                                                    <td class="col-md-1 padding-left-0">
+                                                        <input type="button" class="btn btn-sm btn-ask-primary"
+                                                               value="添加" ng-click="addGoodsInfo(newGoodsInfo)">
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!--end: 添加-->
+                                    </div>
+                                </div>
+
+                                <div class="form-group"
+                                     ng-class="{'has-error':Form.merchantType.$dirty && Form.merchantType.$invalid, 'has-success':Form.merchantType.$valid && Form.merchantId.$valid}"
+                                     style="margin-top: 70px;">
+                                    <label class="control-label col-md-3">
+                                        退货方类型 <span class="symbol required"></span>
+                                    </label>
+
+                                    <div class="col-md-3">
+                                        <select class="form-control" id="merchantType" name="merchantType"
+                                                ng-model="data.merchantType" ng-change="merchantTypeChanged()" required>
+                                            <option value="" disabled>选择退货方</option>
+                                            <option value="factory">工厂</option>
+                                            <option value="partner">合作商</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-control" id="merchantId" name="merchantId"
+                                                ng-model="data.merchantId" required>
+                                            <option value="" disabled>选择退货方类型</option>
+                                            <option ng-repeat="p in merchantList" value="{{p.id}}">{{p.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-ask-primary" ng-click="form.submit(Form)">
+                                        提 交
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!--end: 添加退货单号-->
+            </div>
+        </div>
+    </div>
+</div>

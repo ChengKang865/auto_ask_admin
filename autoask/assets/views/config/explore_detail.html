@@ -1,0 +1,77 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">首页探索详情</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!--start: 探索管理-->
+<div class="container-fluid container-fullw bg-white" ng-controller="exploreDetailCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row padding-top-20">
+            <div class="col-md-12">
+                <!--start: 修改探索表单-->
+                <form name="Form" id="form1" novalidate class="autoask-form">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend>
+                                    首页探索详情
+                                </legend>
+
+                                <div class="form-group margin-top-remove"
+                                     ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                    <label class="control-label col-md-3">
+                                        探索名称
+                                        <span class="symbol required"></span>
+                                    </label>
+                                    <div class="col-md-9" ng-bind-html="data.title"></div>
+                                </div>
+
+                                <div class="form-group"
+                                     ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                    <label class="control-label col-md-3">
+                                        图片
+                                    </label>
+
+                                    <div class="col-md-9 padding-left-0" id="imageUpload">
+                                        <a href="javascript:;" class="col-md-1 a-upload">
+                                            <input type="file" class="upload_file" id="uploadFile" placeholder="上传产品图片"
+                                                   onchange="angular.element(this).scope().uploadImage(this);">上传产品图片
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-9 pull-right padding-left-0">
+                                        <div class="col-md-3 padding-left-0 thumbnail-wrap" ng-repeat="picUrl in picUrlList">
+                                            <span class="glyphicon glyphicon-remove" style="position:relative;float:right;z-index: 99" ng-click="deleteImage('picUrlList',$index)"></span>
+                                            <img ng-src="{{picUrl}}" width="100%">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group"
+                                     ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                    <label class="control-label col-md-3">
+                                        具体内容
+                                    </label>
+                                </div>
+
+                                <div>
+                                    <div class="ueditor" ng-model="data.content" config="_simpleConfig"></div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </form>
+                <!--end: 修改探索表单-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--end: 探索管理-->

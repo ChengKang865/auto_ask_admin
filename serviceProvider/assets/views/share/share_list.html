@@ -1,0 +1,73 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">分成历史记录</h1>
+            <!--<span class="mainDescription"></span>-->
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start: 订单列表 -->
+<div class="container-fluid container-fullw" ng-controller="shareListCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <!--start: 查询 -->
+        <div class="row margin-bottom-30">
+            <div class="row">
+                <div class="row col-md-12">
+                    <div class="col-md-2">
+                        <label for="phone">
+                            起始日期
+                        </label>
+                        <!-- /// controller:  'DatepickerDemoCtrl' -  localtion: assets/js/controllers/bootstrapCtrl.js /// -->
+                        <div>
+
+                            <input  ng-model="startTime" class="form-control"  onclick="WdatePicker({onpicked: function(){$(this).trigger('change')}})"/>
+
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="phone">
+                            结束日期
+                        </label>
+                        <!-- /// controller:  'DatepickerDemoCtrl' -  localtion: assets/js/controllers/bootstrapCtrl.js /// -->
+
+                        <input ng-model="endTime" class="form-control"  onclick="WdatePicker({onpicked: function(){$(this).trigger('change')}})"/>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="status">
+                            状态
+                        </label>
+                        <select class="form-control" id="status" name="status" ng-model="criteria.relatedType">
+                            <option value="">不限</option>
+                            <option value="order_serve_share">线下服务分成</option>
+                            <option value="order_delivery_share">线上服务分成</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="margin-top: 22px">
+                        <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i class="fa fa-find"></i>查询
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="table-responsive">
+                <table ng-table="tableParams" class="table" cg-busy="{promise:loadingPromise}">
+                    <tbody ng-repeat="p in data">
+                    <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                        <td class="rowTd" data-title="'当前余额'">{{p.nowAmount}}</td>
+                        <td class="rowTd" data-title="'之前余额'">{{p.preAmount}}</td>
+                        <td class="rowTd" data-title="'关联类型'">{{p.relatedType | orderShareZh}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- end: 合作伙伴列表 -->

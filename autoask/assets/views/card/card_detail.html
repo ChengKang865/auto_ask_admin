@@ -1,0 +1,166 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">卡片详情</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!--start: 活动管理-->
+<div class="container-fluid container-fullw bg-white" ng-controller="cardDetailCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row padding-top-20">
+            <div class="col-md-12">
+                <!--start: 添加活动表单-->
+                <form name="Form" id="form1" novalidate class="autoask-form">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend>
+                                    卡片详情
+                                </legend>
+
+                                <div class="form-group margin-top-remove"
+                                     ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                    <label class="control-label col-md-3">
+                                        卡片详情
+                                        <span class="symbol required"></span>
+                                    </label>
+                                    <input type="text" placeholder="卡券名称" class="col-md-3"
+                                           name="" required ng-model="data.name" readonly />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">
+                                        对应商品
+                                    </label>
+                                    <div class="col-md-9 padding-left-0">
+                                        <div ng-repeat="goodsCard in data.goodsCardTypeList">
+                                            <div class="col-md-3">{{goodsCard.goods.name}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group"
+                                     ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                    <label class="control-label col-md-3">
+                                        初始数量
+                                        <span class="symbol required"></span>
+                                    </label>
+                                    <input type="text" placeholder="初始数量" class="col-md-3"
+                                           name="" required ng-model="data.num" />
+                                </div>
+
+                                <div class="form-group"
+                                     ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                    <label class="control-label col-md-3">
+                                        现有数量
+                                        <span class="symbol required"></span>
+                                    </label>
+                                    <input type="text" placeholder="现有数量" class="col-md-3"
+                                           name="" required ng-model="data.actualNum
+" />
+                                </div>
+
+                                <div class="form-group"
+                                     ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                    <label class="control-label col-md-3">
+                                        有效期
+                                        <span class="symbol required"></span>
+                                    </label>
+                                    <input type="text" placeholder="有效期" class="col-md-3"
+                                           name="" required ng-model="data.expireTime"  readonly />
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>
+                                    分成设置
+                                </legend>
+                                <div class="form-group col-md-3"
+                                     ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                    <label class="control-label col-md-6">
+                                        合作费
+                                        <span class="symbol required"></span>
+                                    </label>
+                                    <input type="text" placeholder="合作费" class="col-md-6"
+                                           name="" required ng-model="data.agencyFee" readonly />
+                                </div>
+                                <div class="form-group col-md-3"
+                                     ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                    <label class="control-label col-md-6">
+                                        广告费
+                                        <span class="symbol required"></span>
+                                    </label>
+                                    <input type="text" placeholder="广告费" class="col-md-6"
+                                           name="" required ng-model="data.adFee" readonly />
+                                </div>
+                                <div class="form-group col-md-3"
+                                     ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                    <label class="control-label col-md-6">
+                                        服务费
+                                        <span class="symbol required"></span>
+                                    </label>
+                                    <input type="text" placeholder="服务费" class="col-md-6"
+                                           name="" required ng-model="data.serviceFee" readonly />
+                                </div>
+                                <div class="form-group col-md-3"
+                                     ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                    <label class="control-label col-md-6">
+                                        引流费
+                                        <span class="symbol required"></span>
+                                    </label>
+                                    <input type="text" placeholder="引流费" class="col-md-6"
+                                           name="" required ng-model="data.promoteFee" readonly />
+                                </div>
+                                <div class="form-group col-md-3"
+                                     ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                    <label class="control-label col-md-6">
+                                        维修工红包
+                                        <span class="symbol required"></span>
+                                    </label>
+                                    <input type="text" placeholder="维修工红包" class="col-md-6"
+                                           name="" required ng-model="data.handleFee" readonly />
+                                </div>
+                                <div class="form-group col-md-3"
+                                     ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                    <label class="control-label col-md-6">
+                                        制造费
+                                        <span class="symbol required"></span>
+                                    </label>
+                                    <input type="text" placeholder="制造费" class="col-md-6"
+                                           name="" required ng-model="data.factoryFee" readonly />
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>
+                                    使用记录
+                                </legend>
+
+                                <div class="form-group">
+                                    <table  ng-table="tableParams" class="table" >
+                                        <tbody  ng-repeat="item in cardUseList">
+                                            <tr ng-class-odd="'odd'" ng-class-even="'even'">
+                                                <td class="rowTd" data-title="'时间'">{{item.useTime}}</td>
+                                                <td class="rowTd" data-title="'用户'">{{item.phone}}</td>
+                                                <td class="rowTd" data-title="'订单号'">{{item.orderId}}</td>
+                                                <td class="rowTd" data-title="'数量'">{{item.useNum}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </form>
+                <!--end: 添加活动表单-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--end: 活动管理-->
+

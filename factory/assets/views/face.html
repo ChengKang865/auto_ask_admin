@@ -1,0 +1,115 @@
+<!-- start: DASHBOARD TITLE -->
+<section id="page-title" class="padding-top-15 padding-bottom-15">
+    <div class="row">
+        <div class="col-sm-7">
+            <h1 class="mainTitle" translate-values="{ appName: app.name }">欢迎来到AutoAsk管理系统</h1>
+            <span class="mainDescription">概览 & 统计</span>
+        </div>
+    </div>
+</section>
+<!-- end: DASHBOARD TITLE -->
+<!-- start: FEATURED BOX LINKS -->
+<div ng-controller="faceCtrl" class="container-fluid container-fullw bg-white home">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-white no-radius autoask-pannel autoask-panel-primary">
+                <div class="panel-heading text-left">公告</div>
+                <div class="panel-body text-left">
+                    <div class="row h5" ng-repeat="noticeItem in  info.noticeItemList.result">
+                        <span class="col-md-12">{{noticeItem.notice.content}}</span>
+                    </div>
+                </div>
+                <div class="panel-footer text-right">
+                    <a href="#app/noticeItem/list" class="fc-FF6600">查看更多</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-white no-radius autoask-pannel autoask-panel-primary">
+                <div class="panel-heading text-left">&nbsp;</div>
+                <div class="panel-body text-center">
+                    <div class="h2 row">
+                        <span class="col-md-6">本月业绩:</span>
+                        <span class="col-md-6 fc-FF0000">{{info.monthSellAmount}}</span>
+                    </div>
+                </div>
+                <div class="panel-footer text-right">&nbsp;</div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-white no-radius autoask-pannel autoask-panel-primary">
+                <div class="panel-heading text-left">&nbsp;</div>
+                <div class="panel-body text-center">
+                    <div class="h2 row">
+                        <span class="col-md-6">本年业绩:</span>
+                        <span class="col-md-6 fc-FF0000">{{info.yearSellAmount}}</span>
+                    </div>
+                </div>
+                <div class="panel-footer text-right">&nbsp;</div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-white no-radius autoask-pannel autoask-panel-primary">
+                <div class="panel-heading text-left">本店库存低于警戒值的商品</div>
+                <div class="panel-body text-left">
+                    <div class="h5 row" ng-repeat="goodsNum in info.factoryLackList">
+                        <span class="col-md-10">{{goodsNum.goods.name}}</span>
+                        <span class="col-md-2">{{goodsNum.num}}</span>
+                    </div>
+                </div>
+
+                <div class="panel-footer text-right">
+                    <a href="#app/goodsNum/list" class="fc-FF6600">查看更多</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-white no-radius autoask-pannel autoask-panel-primary">
+                <div class="panel-heading text-left">&nbsp;</div>
+                <div class="panel-body text-center">
+                    <div class="h2 row">
+                        <span class="col-md-6">本月分成:</span>
+                        <span class="col-md-6 fc-FF0000">{{info.monthIncome}}</span>
+                    </div>
+                </div>
+                <div class="panel-footer text-right">&nbsp;</div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="panel panel-white no-radius autoask-pannel autoask-panel-primary">
+                <div class="panel-heading text-left">&nbsp;</div>
+                <div class="panel-body text-center">
+                    <div class="h2 row">
+                        <span class="col-md-6">本年分成:</span>
+                        <span class="col-md-6 fc-FF0000">{{info.yearIncome}}</span>
+                    </div>
+                </div>
+                <div class="panel-footer text-right">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table ng-table="tableParams" class="table">
+                <caption>最新订单(<span class="fc-FF0000">{{newOrderNum}}</span>)</caption>
+                <tbody ng-repeat="p in data">
+                <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                    <td class="rowTd" data-title="'订单号'">{{p.orderId}}</td>
+                    <td class="rowTd" data-title="'下单时间'">{{p.createTime}}</td>
+                    <td class="rowTd" data-title="'订单总额'">{{p.snapshotPrice}}</td>
+                    <td class="rowTd" data-title="'本店预计分成'">{{p.orderDelivery.preShare}}</td>
+                    <td class="rowTd" data-title="'收货人'">{{p.user.phone}}</td>
+                    <td class="rowTd" data-title="'状态'">{{p.status | orderInfoStatusZh}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- end: FEATURED BOX LINKS -->
+<!-- start: FIRST SECTION -->

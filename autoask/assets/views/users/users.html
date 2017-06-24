@@ -1,0 +1,63 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">用户列表</h1>
+            <!--<span class="mainDescription"></span>-->
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start: 商品列表 -->
+<div class="container-fluid container-fullw">
+    <div class="row">
+        <div class="col-md-12">
+            <div ng-controller="usersCtrl">
+                <div class="table-responsive row">
+                    <div class="row margin-bottom-10">
+                        <div class="col-md-12 padding-left-0">
+                            <div class="col-md-2">
+                                <label for="phone">
+                                    用户手机号
+                                </label>
+                                <input class="form-control" id="phone" name="criteria.phone" ng-model="criteria.phone" ng-init=""/>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="phone">
+                                    起始日期
+                                </label>
+                                <div>
+                                    <input  ng-model="criteria.startTime" class="form-control"  onclick="WdatePicker({onpicked: function(){$(this).trigger('change')}})"/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="phone">
+                                    结束日期
+                                </label>
+                                <input ng-model="criteria.endTime" class="form-control"  onclick="WdatePicker({onpicked: function(){$(this).trigger('change')}})"/>
+                            </div>
+                            <div class="col-md-1" style="margin-top: 22px">
+                                <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i class="fa fa-find"></i>查询</button>
+                            </div>
+                        </div>
+                    </div>
+                    <table ng-table="tableParams" class="table" cg-busy="{promise:loadingPromise}">
+                        <tbody ng-repeat="p in data">
+                        <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                            <td class="rowTd" data-title="'用户手机'">{{p.phone}}</td>
+                            <td class="rowTd" data-title="'注册时间'">{{p.createTime}}</td>
+                            <td class="rowTd" data-title="'昵称'">{{p.userInfo.nickname}}</td>
+                            <td class="rowTd" data-title="'出生日期'">{{p.userInfo.birthday}}</td>
+                            <td class="rowTd" data-title="'昵称'">{{p.userInfo.gender}}</td>
+                            <td class="rowTd" data-title="'车型信息'">{{p.userInfo.carModel}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: 合作伙伴列表 -->

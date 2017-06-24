@@ -1,0 +1,235 @@
+<div ng-controller="productDetailCtrl">
+    <!-- start: PAGE TITLE -->
+    <section id="page-title">
+        <div class="row">
+            <div class="col-sm-8">
+                <h1 class="mainTitle">产品{{action | actionZh}}</h1>
+            </div>
+            <div ncy-breadcrumb></div>
+        </div>
+    </section>
+    <!-- end: PAGE TITLE -->
+    <!-- start: FORM VALIDATION -->
+    <div class="container-fluid container-fullw bg-white">
+        <div class="row">
+            <div class="col-md-12">
+                <div cg-busy="{promise:loadingPromise}">
+                    <form name="Form" id="form1" novalidate>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>
+                                        基本信息
+                                    </legend>
+                                    <!--产品名称-->
+                                    <div class="form-group col-md-6"
+                                         ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                        <label class="control-label">
+                                            名称 <span class="symbol required"></span>
+                                        </label>
+                                        <input type="text" placeholder="产品名称英文缩写" class="form-control"
+                                               name="name" ng-model="product.name" required/>
+                                        <span class="error text-small block"
+                                              ng-if="Form.name.$dirty && Form.name.$invalid">产品名称不可为空</span>
+                                        <span class="success text-small" ng-if="Form.name.$valid">产品名称合法</span>
+                                    </div>
+                                    <!--产品名称缩写-->
+                                    <div class="form-group col-md-6"
+                                         ng-class="{'has-error':Form.nameEn.$dirty && Form.nameEn.$invalid, 'has-success':Form.nameEn.$valid}">
+                                        <label class="control-label">
+                                            名称缩写(英文缩写/拼音) <span class="symbol required"></span>
+                                        </label>
+                                        <input type="text" placeholder="产品名称英文缩写" class="form-control"
+                                               name="nameEn" ng-model="product.nameEn" required/>
+                                        <span class="error text-small block"
+                                              ng-if="Form.nameEn.$dirty && Form.nameEn.$invalid">缩略名不可为空</span>
+                                        <span class="success text-small" ng-if="Form.nameEn.$valid">缩略名合法</span>
+                                    </div>
+                                    <!--pc head-->
+                                    <div class="form-group col-md-6"
+                                         ng-class="{'has-error':Form.headStr.$dirty && Form.headStr.$invalid, 'has-success':Form.headStr.$valid}">
+                                        <label class="control-label">
+                                            产品导航信息 <span class="symbol required"></span>
+                                        </label>
+                                        <input type="text" placeholder="产品导航信息" class="form-control"
+                                               name="headStr" ng-model="product.headStr" required/>
+                                        <span class="error text-small block"
+                                              ng-if="Form.headStr.$dirty && Form.headStr.$invalid">产品导航信息不可为空</span>
+                                        <span class="success text-small" ng-if="Form.headStr.$valid">产品导航信息合法</span>
+                                    </div>
+                                    <div class="col-md-12 no-padding">
+                                        <div class="col-md-3">
+                                            <img src="{{product.logoUrl}}" width="100" height="100">
+                                            <a href="javascript:;" class="a-upload">
+                                                <input type="file" class="upload_file" id="uploadLog" placeholder="上传LOGO图"
+                                                       onchange="angular.element(this).scope().updateLogo(this);">上传LOGO图
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 no-padding">
+                                        <!-- 产品描述 -->
+                                        <div class="form-group col-md-6"
+                                             ng-class="{'has-error':Form.description.$dirty && Form.description.$invalid, 'has-success':Form.description.$valid}">
+                                            <label class="control-label">
+                                                产品描述 <span class="symbol required"></span>
+                                            </label>
+                                            <input type="text" placeholder="产品描述" class="form-control"
+                                                   name="description" ng-model="product.description" required/>
+                                            <span class="error text-small block"
+                                                  ng-if="Form.description.$dirty && Form.description.$invalid">产品描述不可为空</span>
+                                            <span class="success text-small" ng-if="Form.description.$valid">产品描述合法</span>
+                                        </div>
+                                        <!-- 产品类别调整 -->
+                                        <div class="form-group col-md-6">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error':Form.productCategoryId.$dirty && Form.productCategoryId.$invalid, 'has-success':Form.productCategoryId.$valid}">
+                                                <label for="productCategoryId">
+                                                    产品类别 <span class="symbol required"></span>
+                                                </label>
+                                                <select class="form-control" id="productCategoryId" name="productCategoryId"
+                                                        ng-model="product.productCategoryId" required>
+                                                    <option value="" disabled>&nbsp;</option>
+                                                    <option ng-selected="p.productCategoryId === product.productCategoryId"
+                                                            ng-repeat="p in productCategories"
+                                                            value="{{p.productCategoryId}}">{{p.name}}
+                                                    </option>
+                                                </select>
+                                                <span class="error text-small block"
+                                                      ng-if="Form.productCategoryId.$dirty && Form.productCategoryId.$error.required">请选择产品类别</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 no-padding">
+                                        <!-- 产品 Meta 信息 -->
+                                        <div class="form-group col-md-6">
+                                            <div ng-show="!MetaAddingFlag">
+                                                <button type="button" class="btn btn-wide btn-primary"
+                                                        ng-click="addingMeta()">
+                                                    添加规格
+                                                </button>
+                                            </div>
+                                            <div ng-show="MetaAddingFlag" style="margin-top: 10px">
+                                                <label>参数名:</label>
+                                                <input type="text" ng-model="tmpMeta"/>
+                                                <button type="button" class="btn btn-wide btn-light-green"
+                                                        ng-click="addMeta()">
+                                                    确 定
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6" ng-repeat="meta in metaList">
+                                            <div class="col-md-1">
+                                                <label class="text-center" style="padding-top: 10px">{{meta.name}}</label>
+                                            </div>
+                                            <div class="col-md-10 no-margin-left">
+                                                <tags-input ng-model="meta.valueList" style="width: 100%" min-length="1"
+                                                            min-tags="1"></tags-input>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <button class="btn btn-red pull-right" style="margin-top: 5px"
+                                                        ng-click="removeMeta($index)"><i
+                                                        class="fa fa-times fa fa-white"></i></button>
+                                            </div>
+                                        </div>
+                                        <!-- end product Meta -->
+                                    </div>
+
+                                </fieldset>
+                                <fieldset>
+                                    <legend>
+                                        图片
+                                    </legend>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img ng-src="{{product.productMeta.h5DetailPicture}}" width="100%"
+                                                 height="200px">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <a href="javascript:;" class="a-upload">
+                                            <input type="file" class="updateH5Pic" id="uploadH5DetailPicture"
+                                                   placeholder="上传M站详情图"
+                                                   onchange="angular.element(this).scope().updateH5Pic(this);">上传M站详情图
+                                        </a>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" ng-repeat="pcBuyUrl in pcBuyUrlList">
+                                        <span class="glyphicon glyphicon-remove"
+                                              style="position:relative;float:right;z-index: 99"
+                                              ng-click="deleteImage('pcBuyUrlList',$index)"></span>
+                                            <img ng-src="{{pcBuyUrl}}" width="100%" height="200px">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" id="bugUrlList">
+                                        <a href="javascript:;" class="a-upload">
+                                            <input type="file" class="upload_file" id="uploadPcBuy" placeholder="上传PC购买轮播图"
+                                                   onchange="angular.element(this).scope().uploadImage(this);">上传PC购买轮播图
+                                        </a>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" ng-repeat="h5BuyUrl in h5BuyUrlList">
+                                        <span class="glyphicon glyphicon-remove"
+                                              style="position:relative;float:right;z-index: 99"
+                                              ng-click="deleteImage('h5BuyUrlList',$index)"></span>
+                                            <img ng-src="{{h5BuyUrl}}" width="100%" height="200px">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" id="h5BuyUrl">
+                                        <a href="javascript:;" class="a-upload">
+                                            <input type="file" class="upload_file" id="uploadH5Buy" placeholder="上传M站购买轮播图"
+                                                   onchange="angular.element(this).scope().uploadImage(this);">上传M站购买轮播图
+                                        </a>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" ng-repeat="picUrl in picUrlList">
+                                        <span class="glyphicon glyphicon-remove"
+                                              style="position:relative;float:right;z-index: 99"
+                                              ng-click="deleteImage('picUrlList',$index)"></span>
+                                            <img ng-src="{{picUrl}}" width="100%" height="200px">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" id="imageUpload">
+                                        <a href="javascript:;" class="a-upload">
+                                            <input type="file" class="upload_file" id="uploadFile" placeholder="性能参数图"
+                                                   onchange="angular.element(this).scope().uploadImage(this);">性能参数图
+                                        </a>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" ng-repeat="infoUrl in infoUrlList">
+                                        <span class="glyphicon glyphicon-remove"
+                                              style="position:relative;float:right;z-index: 99"
+                                              ng-click="deleteImage('infoUrlList',$index)"></span>
+                                            <img ng-src="{{infoUrl}}" width="100%" height="200px">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" id="infoImageUpload">
+                                        <a href="javascript:;" class="a-upload">
+                                            <input type="file" class="upload_file" id="infoUploadFile" placeholder="产品详情图"
+                                                   onchange="angular.element(this).scope().uploadImage(this);">产品详情图
+                                        </a>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary" ng-click="form.submit(Form)">
+                                            提 交
+                                        </button>
+                                        <button type="reset" class="btn btn-primary btn-o" ng-click="form.reset(Form)">
+                                            重 置
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end: FORM VALIDATION -->
+</div>

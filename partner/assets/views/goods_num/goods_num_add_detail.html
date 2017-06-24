@@ -1,0 +1,115 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">发货详情</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!--start: 库存详情-->
+<div class="container-fluid container-fullw bg-white" ng-controller="goodsNumRecordDetailCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row" style="padding-top: 20px">
+            <div class="col-md-12">
+                <!--start: 添加发货表单-->
+                <form name="Form" id="form1" novalidate class="autoask-form">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend>
+                                    发货详情
+                                </legend>
+                                <!--产品类别名称-->
+                                <div class="form-group margin-top-remove"
+                                     ng-class="{'has-error':Form.serial.$dirty && Form.serial.$invalid, 'has-success':Form.serial.$valid}">
+                                    <label class="control-label col-md-3">
+                                        发货单号 <span class="symbol required"></span>
+                                    </label>
+                                    <input type="text" placeholder="发货单号" class="col-md-3"
+                                           name="serial" required ng-model="data.serial"/>
+                                </div>
+
+                                <div class="form-group"
+                                     ng-class="{'has-error':Form.recordTime.$dirty && Form.recordTime.$invalid, 'has-success':Form.recordTime.$valid}">
+                                    <label class="control-label col-md-3">
+                                        时间 <span class="symbol required"></span>
+                                    </label>
+                                    <input id="recordTime" name="recordTime" type="text" class="col-md-3"
+                                           ng-model="data.recordTime" required/>
+                                </div>
+
+                                <div class="form-group "
+                                     ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                    <label class="control-label col-md-3">
+                                        商品信息
+                                    </label>
+
+                                    <div class="col-md-9">
+                                        <div class="col-md-9 padding-left-0">
+                                            <table class="table padding-left-0">
+                                                <thead>
+                                                <tr>
+                                                    <th class="col-md-3 padding-left-0">产品类别</th>
+                                                    <th class="col-md-3 padding-left-0">产品名</th>
+                                                    <th class="col-md-3 padding-left-0">商品</th>
+                                                    <th class="col-md-3 padding-left-0">数量</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody ng-repeat="item in data.goodsInfoList track by $index">
+
+                                                <tr ng-class-odd="'odd'" ng-class-even="'even'" data-title="'类别'">
+                                                    <td class="col-md-3 padding-left-0">
+                                                        <span>{{item.productCategoryName}}</span>
+                                                    </td>
+                                                    <td class="col-md-3 padding-left-0" data-title="'类别'">
+                                                        <span>{{item.productName}}</span>
+                                                    </td>
+                                                    <td class="col-md-3 padding-left-0" data-title="'类别'">
+                                                        <span>{{item.goodsName}}</span>
+                                                    </td>
+                                                    <td class="col-md-3 padding-left-0" data-title="'类别'">
+                                                        <span>{{item.num}}</span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group"
+                                     ng-class="{'has-error':Form.merchantType.$dirty && Form.merchantType.$invalid, 'has-success':Form.merchantType.$valid && Form.merchantId.$valid}"
+                                     style="margin-top: 70px;">
+                                    <label class="control-label col-md-3">
+                                        发货方类型 <span class="symbol required"></span>
+                                    </label>
+
+                                    <div class="col-md-3">
+                                        <span>{{data.merchantType | merchantTypeZh}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group"
+                                     ng-class="{'has-error':Form.merchantType.$dirty && Form.merchantType.$invalid, 'has-success':Form.merchantType.$valid && Form.merchantId.$valid}"
+                                     style="margin-top: 70px;">
+                                    <label class="control-label col-md-3">
+                                        发货方名称 <span class="symbol required"></span>
+                                    </label>
+
+                                    <div class="col-md-3">
+                                        <span>{{data.merchantName}}</span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </form>
+                <!--end: 添加发货表单-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--end: 库存详情-->

@@ -1,0 +1,125 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">卡券列表</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!--start: 首页探索管理列表-->
+<div class="container-fluid container-fullw" ng-controller="cardListCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row">
+            <!--start: 查询 -->
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-12 margin-bottom-5 clearfix">
+                        <div class="col-md-2 padding-left-0">
+                            <label>
+                                卡券详情
+                            </label>
+                            <input type="text" class="form-control" placeholder="卡券名称" ng-model="criteria.name"/>
+                        </div>
+
+                        <div class="col-md-2 padding-left-0">
+                            <label>
+                                所属产品类别
+                            </label>
+
+                            <select class="form-control" id="productCategoryId" name="productCategoryId"
+                                    ng-model="criteria.productCategoryId" ng-change="productCategoryChanged()"
+                                    required>
+                                <option value="">不限</option>
+                                <option ng-repeat="p in productCategories"
+                                        value="{{p.productCategoryId}}">{{p.name}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-2 padding-left-0">
+                            <label>
+                                所属产品
+                            </label>
+
+                            <select class="form-control" id="productId" name="productId"
+                                    ng-model="criteria.productId" ng-change="changeProduct()"
+                                    required>
+                                <option value="">不限</option>
+                                <option ng-repeat="p in products" value="{{p.productId}}">
+                                    {{p.name}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-2 padding-left-0">
+                            <label>
+                                所属商品
+                            </label>
+
+                            <select class="form-control" id="goodsId" name="goodsId"
+                                    ng-model="criteria.goodsId"
+                                    required>
+                                <option value="">不限</option>
+                                <option ng-repeat="p in goodsList" value="{{p.goodsId}}">{{p.name}}
+                            </select>
+                        </div>
+
+                        <div class="col-md-2">
+                            <button class="btn btn-wide btn-ask-primary margin-top-22" ng-click="query()"><i
+                                    class="fa fa-find"></i>查询
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="margin-bottom-10 row text-right margin-right-5">
+                <a href="#/app/card/add"
+                   class="btn btn-wide btn-ask-primary"><i class="fa fa-plus"></i>添加卡券</a>
+            </div>
+            <!--end: 查询 -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <!--start: 卡片类别列表-->
+                        <table ng-table="tableParams" class="table">
+                            <tbody ng-repeat="item in cardTypeList">
+                            <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                                <td class="rowTd" data-title="'卡名称'">{{item.name}}</td>
+                                <td class="rowTd" data-title="'对应商品'">{{item.bindGoodsNames}}</td>
+                                <td class="rowTd" data-title="'初始数量'">{{item.num}}</td>
+                                <td class="rowTd" data-title="'已用数量'">{{item.useNum}}</td>
+                                <td class="rowTd" data-title="'有效期'">{{item.expireTime | date}}</td>
+                                <!--<td class="rowTd" data-title="'状态'">{{item | cardTypeStatusZh}}</td>-->
+                                <!--<td class="rowId text-right">-->
+                                    <!--<input type=button class="btn btn-ask-primary btn-sm margin-right-20" value="激活"-->
+                                           <!--ng-if="!item.deleteFlag && item.status == 'to_check'"-->
+                                           <!--ng-click="activeCardType(item.cardTypeId)">-->
+                                <!--</td>-->
+                                <td class="rowId text-right">
+                                    <a href="#/app/card/detail/{{item.cardTypeId}}"
+                                       class="btn btn-ask-view btn-sm margin-right-20">详情</a>
+                                </td>
+                                <td class="rowId text-right">
+                                    <a href="#" ng-if="!item.deleteFlag" ng-csv="exportCardIdsCSV(item.cardTypeId)"
+                                       lazy-load="true" filename="{{item.name}}.csv"
+                                       class="btn btn-ask-modify btn-sm margin-right-20">导出卡编码 </a>
+                                </td>
+                                <td class="rowId text-right">
+                                    <a href="#/app/card/item/{{item.cardTypeId}}"
+                                       class="btn btn-ask-modify btn-sm margin-right-20">单卡管理 </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!--end: 卡片类别列表结束-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

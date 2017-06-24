@@ -1,0 +1,60 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">提现历史</h1>
+            <!--<span class="mainDescription"></span>-->
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start:  申请管理 -->
+<div class="container-fluid container-full">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- /// controller:  'ngTableCtrl6' -  localtion: assets/js/controllers/ngTableCtrl.js /// -->
+            <div ng-controller="applyListCtrl">
+                <div class="table-responsive">
+                    <div class="margin-bottom-10">
+                        <div class="col-md-12 margin-bottom-10"  style="padding-top: 20px">
+                            <div class="col-md-2">
+                                <label>
+                                    起始日期
+                                </label>
+                                <div>
+                                    <input  ng-model="startTime" class="form-control"  onclick="WdatePicker({onpicked: function(){$(this).trigger('change')}})"/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>
+                                    结束日期
+                                </label>
+                                <input ng-model="endTime" class="form-control"  onclick="WdatePicker({onpicked: function(){$(this).trigger('change')}})"/>
+                            </div>
+                            <div class="col-md-1" style="margin-top: 22px">
+                                <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i class="fa fa-find"></i>查询</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table ng-table="tableParams" class="table" cg-busy="{promise:loadingPromise}">
+                        <tbody ng-repeat="p in data">
+                        <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                            <td class="rowTd" data-title="'商家类型'">{{p.merchantType | merchantTypeZh}}</td>
+                            <td class="rowTd" data-title="'商户名称'">{{p.merchantName}}</td>
+                            <td class="rowTd" data-title="'申请时间'">{{p.createTime}}</td>
+                            <td class="rowTd" data-title="'申请金额'">{{p.amount + p.fee}}</td>
+                            <td class="rowTd" data-title="'手续费'">{{p.fee}}</td>
+                            <td class="rowTd" data-title="'实际到账'">{{p.amount}}</td>
+                            <td class="rowTd" data-title="'状态'">{{p.status | applyStatusZh }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: 提取历史 -->

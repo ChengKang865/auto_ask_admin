@@ -1,0 +1,57 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">员工管理</h1>
+            <!--<span class="mainDescription"></span>-->
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start: 订单列表 -->
+<div class="container-fluid container-fullw" ng-controller="roleListCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row margin-bottom-30">
+            <div class="col-md-3">
+                <label for="">姓名</label>
+                <input placeholder="员工名称" type="text" class="form-control" ng-model="criteria.name"/>
+            </div>
+
+            <div class="col-md-1 margin-top-22">
+                <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i class="fa fa-find"></i>查询</button>
+            </div>
+        </div>
+
+        <div class="row margin-bottom-10 text-right">
+            <a href="#/app/system/roleAdd"
+               class="btn btn-wide btn-ask-primary"><i class="fa fa-plus"></i>添加员工</a>
+        </div>
+
+        <div class="row">
+            <div class="table-responsive">
+                <table ng-table="tableParams" class="table" cg-busy="{promise:loadingPromise}">
+                    <tbody ng-repeat="p in data">
+                    <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                        <td class="rowTd" data-title="'创建时间'">{{p.createTime}}</td>
+                        <td class="rowTd" data-title="'姓名'">{{p.name}}</td>
+                        <td class="rowTd" data-title="'手机号码'">{{p.phone}}</td>
+                        <td class="rowTd" data-title="'权限'">{{p.role | roleZh}}</td>
+                        <td class="rowTd text-right">
+                            <a href="#" class="btn btn-ask-modify btn-sm" ng-click="deleteStaff(p.id)">禁用</a>
+                        </td>
+                        <td class="rowTd text-right">
+                            <a href="#/app/system/roleModify/{{p.id}}" class="btn btn-ask-modify btn-sm">修改</a>
+                        </td>
+                        <td class="rowTd text-right">
+                            <a href="#/app/system/roleDetail/{{p.id}}" class="btn btn-ask-view btn-sm">详情</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: 合作伙伴列表 -->

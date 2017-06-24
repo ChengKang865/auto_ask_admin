@@ -1,0 +1,118 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">首页产品管理</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+<!-- start: FORM VALIDATION -->
+<div class="container-fluid container-fullw bg-white">
+    <div class="col-md-12">
+        <div ng-controller="indexProductCtrl" cg-busy="{promise:loadingPromise}">
+
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon">渠道</span>
+                            <select class="form-control" ng-model="channel" ng-init="channel = 'pc'" ng-change="query()"
+                                    required>
+                                <option value="h5">M站</option>
+                                <option value="pc">PC</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon">标签</span>
+                            <select class="form-control" ng-model="label" ng-init="label = 'new_gen'"
+                                    ng-change="query()" required>
+                                <option value="hot">明星单品</option>
+                                <option value="new_gen">THE NEWGEN SERIES</option>
+                                <option value="classic">THE CLASSIC SERIES</option>
+                                <option value="classic_others">THE CLASSIC OTHERS</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col-md-4">-->
+                    <!--<button class="btn btn-wide btn-primary" ng-click="query()">查询</button>-->
+                <!--</div>-->
+            </div>
+
+            <div>
+                <form role="form" class="form-horizontal">
+                    <div ng-repeat="indexProduct in indexProductList track by $index" style="margin-top:30px;">
+                        <!-- 产品类别调整 -->
+                        <div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">
+                                            产品
+                                        </label>
+
+                                        <div class="col-sm-10">
+                                            <select name="product" id="product" class="form-control"
+                                                    ng-model="indexProduct.productId"
+                                                    ng-options="p.productId as p.name for p in products" required>
+                                                <option value="" disabled>&nbsp;</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">
+                                            排序
+                                        </label>
+
+                                        <div class="col-sm-10">
+                                            <input type="number" ng-model="indexProduct.weight" class="form-control"
+                                                   ng-pattern="/[0-9]/"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <button class="btn btn-danger" ng-click="deleteIndexProduct($index)">删除</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="label === 'hot'">
+                                <div class="col-md-5">
+                                    <img ng-show="indexProduct.picUrl" ng-src="{{indexProduct.picUrl}}" width="100px" height="100px">
+                                </div>
+                                <div class="col-md-3">
+                                    <a href="javascript:;" class="a-upload">
+                                        <input type="file" id="upload-{{$index}}" class="upload_file" id="uploadFile"
+                                               placeholder="上传图片"
+                                               onchange="angular.element(this).scope().uploadImage(this);">上传图片
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:20px;">
+                        <div class="col-md-6">
+                            <button class="btn btn-wide btn-primary" ng-click="addIndexProduct()">新增</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="row" style="margin-top: 40px;">
+                <div class="pull-right margin-right-15">
+                    <button class="btn btn-wide btn-success" ng-click="submit()">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end: FORM VALIDATION -->
+</div>

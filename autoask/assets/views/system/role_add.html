@@ -1,0 +1,83 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">添加员工</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!--start: 活动管理-->
+<div class="container-fluid container-fullw bg-white" ng-controller="roleAddCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row padding-top-20">
+            <div class="col-md-12">
+                <!--start: 添加活动表单-->
+                <form name="Form" id="form1" novalidate class="autoask-form">
+                    <div class="row">
+                        <fieldset>
+                            <legend>
+                                添加员工
+                            </legend>
+
+                            <div class="form-group"
+                                 ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                <label class="control-label col-md-3">
+                                    员工名称
+                                    <span class="symbol required"></span>
+                                </label>
+                                <input type="text" placeholder="员工名称" class="col-md-3" ng-model="staff.name"
+                                       name="name" required/>
+                            </div>
+
+                            <div class="form-group"
+                                 ng-class="{'has-error':Form.phone.$dirty && Form.phone.$invalid, 'has-success':Form.phone.$valid}">
+                                <label class="control-label col-md-3">
+                                    手机号码
+                                    <span class="symbol required"></span>
+                                </label>
+                                <input type="text" placeholder="手机号码" class="col-md-3" ng-model="staff.phone"
+                                       name="phone" required/>
+                            </div>
+
+                            <div class="form-group" ng-class="{'has-error':Form.role.$dirty && Form.role.$invalid, 'has-success':Form.role.$valid}">
+                                <label class="control-label col-md-3">
+                                    权限
+                                    <span class="symbol required"></span>
+                                </label>
+                                <div class="col-md-3 padding-left-0">
+                                    <select name="role" class="form-control" required
+                                            ng-model="staff.role">
+                                        <option value="root">管理员</option>
+                                        <option value="check">财务</option>
+                                        <option value="edit">客服</option>
+                                        <option value="weixin">微信管理</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+
+                        </fieldset>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                <button type="button" class="btn btn-ask-primary" ng-click="form.submit(Form)">
+                                    提交
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!--end: 添加活动表单-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--end: 活动管理-->
+

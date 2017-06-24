@@ -1,0 +1,70 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">免邮费金额设定</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<div class="container-fluid container-fullw" ng-controller="deliveryFeeCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row" style="padding-top: 20px">
+            <div class="col-md-12">
+                <form name="Form" id="form1" novalidate>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend>
+                                    免邮费金额设定
+                                </legend>
+
+                                <div class="form-group"
+                                     ng-class="{'has-error':Form.deliveryFreeAmount.$dirty && Form.deliveryFreeAmount.$invalid, 'has-success':Form.deliveryFreeAmount.$valid}"
+                                     style="margin-top: 70px;">
+                                    <label class="control-label col-md-3">
+                                        额度
+                                        <span class="symbol required"></span>
+                                    </label>
+                                    <input type="number" placeholder="额度" class="col-md-9"
+                                           name="deliveryFreeAmount" required ng-model="deliveryFreeAmount"/>
+                                </div>
+
+                                <div class="form-group" style="top: 20px;">
+                                    <label class="control-label col-md-3">
+                                        不参与免邮地区
+                                        <span class="symbol"></span>
+                                    </label>
+                                    <div>
+                                        <input id="flag" type="checkbox" ng-model="select_all" ng-change="selectAll()">全选
+                                        <table>
+                                            <tbody>
+                                            <tr ng-repeat="i in list">
+                                                <td>
+                                                    <input  type="checkbox" ng-checked="{{i.isChoice}}" ng-model="i.checked" ng-change="selectOne()">{{i.name}}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-primary" ng-click="form.submit(Form)">
+                                        提 交
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

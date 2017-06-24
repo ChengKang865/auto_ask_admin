@@ -1,0 +1,59 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">公告详情</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!--start: 活动管理-->
+<div class="container-fluid container-fullw bg-white" ng-controller="noticeItemDetailCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row padding-top-20">
+            <div class="col-md-12">
+                <!--start: 添加活动表单-->
+                <form name="Form" id="form1" novalidate class="autoask-form">
+                    <div class="row">
+                        <fieldset>
+                            <legend>
+                                公告详情
+                            </legend>
+
+                            <div class="form-group margin-top-remove">
+                                <label class="control-label col-md-3">
+                                    时间
+                                    <span class="symbol required"></span>
+                                </label>
+                                <input type="text" placeholder="时间" class="col-md-3"
+                                       name="" required ng-model="noticeItem.createTime" readonly/>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3">
+                                    标题
+                                    <span class="symbol required"></span>
+                                </label>
+                                <input type="text" placeholder="标题" class="col-md-3"
+                                       name="" ng-model="noticeItem.notice.title" readonly/>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3">
+                                    内容
+                                    <span class="symbol required"></span>
+                                </label>
+                                <div class="col-md-9 padding-left-0">{{noticeItem.notice.content}}</div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </form>
+                <!--end: 添加活动表单-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--end: 活动管理-->
+

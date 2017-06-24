@@ -1,0 +1,106 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">分成历史记录</h1>
+            <!--<span class="mainDescription"></span>-->
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start: 订单列表 -->
+<div class="container-fluid container-full">
+    <div class="row">
+        <div class="col-md-12">
+            <div ng-controller="shareListCtrl">
+                <input type="text" ng-model="criteria.merchantType" ng-init="criteria.merchantType = 'service_provider'"
+                       style="display: none;">
+                <div class="table-responsive">
+                    <div class="margin-bottom-10">
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <label>
+                                    起始日期
+                                </label>
+                                <div>
+                                    <input ng-model="criteria.startTime" class="form-control"
+                                           onclick="WdatePicker({onpicked: function(){$(this).trigger('change')}})"/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>
+                                    结束日期
+                                </label>
+                                <input ng-model="criteria.endTime" class="form-control"
+                                       onclick="WdatePicker({onpicked: function(){$(this).trigger('change')}})"/>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label>
+                                    结束日期
+                                </label>
+                                <input ng-model="criteria.orderId" class="form-control"/>
+                            </div>
+
+
+                            <div class="col-md-3 padding-left-0">
+                                <label for="partner">
+                                    合作商
+                                </label>
+                                <select class="form-control" id="partner" name="partner"
+                                        ng-model="criteria.partnerId" ng-change="partnerChanged()">
+                                    <option value="">不限</option>
+                                    <option ng-repeat="partner in partnerList" value="{{partner.id}}">{{partner.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3 padding-left-0">
+                                <label for="serviceProvider">
+                                    服务店
+                                </label>
+                                <select class="form-control" id="serviceProvider" name="partner"
+                                        ng-model="criteria.serviceProviderId">
+                                    <option value="">不限</option>
+                                    <option ng-repeat="s in serviceProviderList" value="{{s.id}}">{{s.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+
+                            <div class="col-md-1" style="margin-top: 22px">
+                                <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i
+                                        class="fa fa-find"></i>查询
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <table ng-table="tableParams" class="table" cg-busy="{promise:loadingPromise}">
+                        <tbody ng-repeat="p in data">
+                        <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                            <!--<td class="rowTd" data-title="'商户类型'">{{p.merchantType | merchantTypeZh}}</td>-->
+                            <td class="rowTd" data-title="'服务店'">{{p.merchantName}}</td>
+                            <td class="rowTd" data-title="'分成时间'">{{p.createTime | date}}</td>
+                            <td class="rowTd" data-title="'订单类型'">{{p.orderInfo.serveType | serveTypeZh}}</td>
+                            <td class="rowTd" data-title="'订单号'">{{p.relatedId}}</td>
+                            <td class="rowTd" data-title="'分成类型'">
+                                <div ng-repeat="recordItem in p.assetsRecordItemList">
+                                    {{recordItem.incomeType | incomeTypeZh}} : {{recordItem.amount}}
+                                </div>
+                            </td>
+                            <td class="rowTd" data-title="'总分成'">{{p.changeAmount}}</td>
+                            <td class="rowTd text-right">
+                                <a href="#/app/order/detail/{{p.relatedId}}" type=button
+                                   class="btn btn-ask-view btn-sm">相关订单详情</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: 合作伙伴列表 -->

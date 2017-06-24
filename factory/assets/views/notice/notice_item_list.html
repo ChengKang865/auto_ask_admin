@@ -1,0 +1,66 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">公告列表</h1>
+            <!--<span class="mainDescription"></span>-->
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start: 订单列表 -->
+<div class="container-fluid container-fullw" ng-controller="noticeItemListCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row">
+            <div class="col-md-2 padding-left-0">
+                <label>
+                    起始日期
+                </label>
+                <div>
+                    <input ng-model="criteria.startTime" class="form-control"
+                           onclick="WdatePicker({onpicked: function(){$(this).trigger('change')}})"/>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label>
+                    结束日期
+                </label>
+                <input ng-model="criteria.endTime" class="form-control"
+                       onclick="WdatePicker({onpicked: function(){$(this).trigger('change')}})"/>
+            </div>
+            <div class="col-md-2 padding-left-0">
+                <label for="">
+                    标题及标题关键字
+                </label>
+                <input type="text" class="form-control" ng-model="criteria.content"/>
+            </div>
+            <div class="col-md-1" style="margin-top: 22px">
+                <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i class="fa fa-find"></i>查询</button>
+            </div>
+        </div>
+
+        <div class="row margin-top-30">
+            <div class="table-responsive">
+                <table ng-table="tableParams" class="table" cg-busy="{promise:loadingPromise}">
+                    <tbody ng-repeat="p in data">
+                    <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                        <td class="rowTd" data-title="'时间'">{{p.createTime}}</td>
+                        <td class="rowTd" data-title="'标题'">{{p.notice.title}}</td>
+                        <td class="rowTd" data-title="'内容'">{{p.notice.content}}</td>
+                        <td class="rowTd" data-title="'状态'">{{p.readFlag | readStatusZh }}</td>
+                        <td class="rowTd">
+                            <div class="pull-right margin-right-10">
+                                <a href="#/app/noticeItem/detail/{{p.id}}" type=button
+                                   class="btn btn-ask-view btn-sm">详情</a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: 合作伙伴列表 -->

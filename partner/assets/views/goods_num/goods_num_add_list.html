@@ -1,0 +1,97 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">发货单号</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!--start: 发货列表-->
+<div class="container-fluid container-fullw" ng-controller="goodsNumRecordListCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <!--start: 查询 -->
+        <div class="row margin-bottom-10">
+            <input type="text" style="display: none;" ng-model="criteria.addType" ng-init="criteria.addType = true"/>
+
+            <div class="col-md-2 padding-left-0">
+                <label>
+                    起始日期
+                </label>
+
+                <input id="startTime" name="startTime" type="text" class="form-control"
+                       ng-model="criteria.startTime" required/>
+            </div>
+
+            <div class="col-md-2">
+                <label>
+                    结束日期
+                </label>
+                <input id="endTime" name="endTime" type="text" class="form-control"
+                       ng-model="criteria.endTime" required/>
+            </div>
+
+            <div class="col-md-2">
+                <label>
+                    单号
+                </label>
+                <input type="text" class="form-control" placeholder="单号"
+                       ng-model="criteria.serial"/>
+            </div>
+
+            <!--发货方类型默认为 serviceProvider-->
+            <input type="text" style="display: none;" ng-model="criteria.merchantType" ng-init="criteria.merchantType = 'service_provider'">
+
+            <div class="col-md-2">
+                <label>
+                    发货方
+                </label>
+                <select class="form-control" id="merchantId" name="merchantId" ng-model="criteria.merchantId">
+                    <option value="">不限</option>
+                    <option ng-repeat="p in serviceProviderList" value="{{p.id}}">{{p.name}}</option>
+                </select>
+            </div>
+
+            <div class="col-md-1 margin-top-22">
+                <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i class="fa fa-find"></i>查询
+                </button>
+            </div>
+        </div>
+        <!--end: 查询 -->
+
+        <div class="row margin-bottom-10 text-right">
+            <a href="#/app/goodsNum/add"
+               class="btn btn-wide btn-ask-primary"><i class="fa fa-plus"></i>添加发货订单</a>
+        </div>
+        <div class="row">
+            <div class="table-responsive">
+                <!--start: 发货列表-->
+                <table ng-table="tableParams" class="table">
+                    <tbody ng-repeat="item in dataList">
+                    <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                        <td class="rowTd" data-title="'发货单号'">{{item.serial}}</td>
+                        <td class="rowTd" data-title="'发货时间'">{{item.recordTime | date}}</td>
+                        <td class="rowTd" data-title="'具体商品'">{{item.goodsInfoList.length > 1 ?
+                            item.goodsInfoList[0].goodsName + ' 等' : item.goodsInfoList[0].goodsName}}
+                        </td>
+                        <td class="rowTd" data-title="'收货方'">{{item.merchantName}}</td>
+
+                        <div class="pull-right margin-right-10">
+                            <td class="rowTd text-right">
+                                <a href="#/app/goodsNum/add/detail/{{item.id}}" type=button
+                                   class="btn btn-ask-view btn-sm">详情</a>
+                            </td>
+                        </div>
+                    </tr>
+                    </tbody>
+                </table>
+                <!--end: 发货列表-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--end: 发货列表-->
+
+

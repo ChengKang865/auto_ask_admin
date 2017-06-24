@@ -1,0 +1,278 @@
+<div ng-controller="goodsDetailCtrl">
+    <!-- start: PAGE TITLE -->
+    <section id="page-title">
+        <div class="row">
+            <div class="col-sm-8">
+                <h1 class="mainTitle">商品{{action | actionZh}}</h1>
+            </div>
+            <div ncy-breadcrumb></div>
+        </div>
+    </section>
+    <!-- end: PAGE TITLE -->
+    <!-- start: FORM VALIDATION -->
+    <div class="container-fluid container-fullw bg-white">
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <form name="Form" id="form1" novalidate>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>
+                                        基本信息
+                                    </legend>
+                                    <div class="row">
+                                        <!-- 产品类别调整 -->
+                                        <div class="form-group col-md-6">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error':Form.productCategoryId.$dirty && Form.productCategoryId.$invalid, 'has-success':Form.productCategoryId.$valid}">
+                                                <label for="productCategoryId">
+                                                    所属产品类别 <span class="symbol required"></span>
+                                                </label>
+                                                <select class="form-control" id="productCategoryId"
+                                                        name="productCategoryId"
+                                                        ng-model="productCategoryId"
+                                                        ng-change="productCategoryChanged()"
+                                                        required>
+                                                    <option value="" disabled>&nbsp;</option>
+                                                    <option ng-selected="p.productCategoryId === productCategoryId"
+                                                            ng-repeat="p in productCategories"
+                                                            value="{{p.productCategoryId}}">{{p.name}}
+                                                    </option>
+                                                </select>
+                                                <span class="error text-small block"
+                                                      ng-if="Form.productCategoryId.$dirty && Form.productCategoryId.$error.required">请选择产品类别</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error':Form.productId.$dirty && Form.productId.$invalid, 'has-success':Form.productId.$valid}">
+                                                <label for="productId">
+                                                    所属产品 <span class="symbol required"></span>
+                                                </label>
+                                                <select class="form-control" id="productId" name="productId"
+                                                        ng-model="goods.productId" ng-change="productChanged()"
+                                                        required>
+                                                    <option value="" disabled>&nbsp;</option>
+                                                    <option ng-selected="p.productId === goods.productId"
+                                                            ng-repeat="p in products" value="{{p.productId}}">{{p.name}}
+                                                    </option>
+                                                </select>
+                                                <span class="error text-small block"
+                                                      ng-if="Form.productId.$dirty && Form.productId.$error.required">请选择产品</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6"
+                                             ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                            <label class="control-label">
+                                                商品名称 <span class="symbol required"></span>
+                                            </label>
+                                            <input type="text" placeholder="商品名称" class="form-control" name="name"
+                                                   ng-model="goods.name" required/>
+                                            <span class="error text-small block"
+                                                  ng-if="Form.name.$dirty && Form.name.$invalid">商品名称不可空</span>
+                                        </div>
+                                        <div class="form-group col-md-6"
+                                             ng-class="{'has-error':Form.nameEn.$dirty && Form.nameEn.$invalid, 'has-success':Form.nameEn.$valid}">
+                                            <label class="control-label">
+                                                商品缩写(英文/拼音) <span class="symbol required"></span>
+                                            </label>
+                                            <input type="text" placeholder="商品缩写" class="form-control" name="nameEn"
+                                                   ng-model="goods.nameEn" required/>
+                                            <span class="error text-small block"
+                                                  ng-if="Form.nameEn.$dirty && Form.nameEn.$invalid">商品缩写不可空</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- meta信息 -->
+
+                                    <div class="row">
+                                        <div class="form-group col-md-2" ng-repeat="m in metaList">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error':Form['meta{{$index}}'].$dirty && Form['meta{{$index}}'].$invalid, 'has-success':Form['meta{{$index}}'].$valid}">
+                                                <label for="meta{{$index}}">
+                                                    {{m.name}} <span class="symbol required"></span>
+                                                </label>
+                                                <select class="form-control" id="meta{{$index}}" name="meta{{$index}}"
+                                                        ng-model="metas[m.name]" required>
+                                                    <option value="" disabled>请选择</option>
+                                                    <!--<option ng-repeat="p in m.valueList" value="{{p}}">{{p}}</option>-->
+                                                    <option ng-selected="p === metas[m.name]"
+                                                            ng-repeat="p in m.valueList"
+                                                            value="{{p}}">{{p}}
+                                                    </option>
+                                                </select>
+                                                <span class="error text-small block"
+                                                      ng-if="Form['meta{{$index}}'].$dirty && Form['meta{{$index}}'].$invalid">{{m.name}}不可空</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 价格信息 -->
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <!--<div class="form-group" ng-class="{'has-error':Form.onlinePrice.$dirty && Form.onlinePrice.$invalid, 'has-success':Form.onlinePrice.$valid}">-->
+                                            <label class="control-label" for="onlinePrice">
+                                                价格 <span class="symbol required"></span>
+                                            </label>
+                                            <input ng-model="goods.onlinePrice" type="text" value="0" name="onlinePrice"
+                                                   touchspin id="onlinePrice" data-bts-step="0.01"
+                                                   data-min="0" data-max="1000000000" data-stepinterval="50"
+                                                   data-decimals="2" min="0.01"
+                                                   data-maxboostedstep="10000000" data-prefix="￥"/>
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label">
+                                                商品类型 <span class="symbol required"></span>
+                                            </label>
+                                            <select class="form-control" ng-model="goods.type" required>
+                                                <option value="all">O2O类</option>
+                                                <option value="online">F2C类</option>
+                                                <!--<option value="offline">线下服务</option>-->
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <div ng-class="{'has-error':Form.factoryId.$dirty && Form.factoryId.$invalid, 'has-success':Form.factoryId.$valid}">
+                                                <label class="control-label">
+                                                    代理工厂 <span class="symbol"></span>
+                                                </label>
+                                                <select class="form-control" id="factoryId" name="factoryId"
+                                                        ng-model="goods.factoryId">
+                                                    <option value="">无</option>
+                                                    <option ng-repeat="p in factories" value="{{p.id}}">{{p.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 分成部分 -->
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label">
+                                                广告费分成 <span class="symbol required"></span>
+                                            </label>
+                                            <input ng-model="goods.adFee" type="text" value="10" name="adFee" touchspin
+                                                   min="0" data-bts-step="0.01"
+                                                   data-min="0" data-max="1000000000" data-stepinterval="50"
+                                                   data-decimals="2"
+                                                   data-maxboostedstep="10000000" data-prefix="￥">
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label">
+                                                维修工分成 <span class="symbol required"></span>
+                                            </label>
+                                            <input ng-model="goods.handleFee" type="number" value="10" name="handleFee"
+                                                   touchspin min="0" data-bts-step="0.01"
+                                                   data-min="0" data-max="1000000000" data-stepinterval="50"
+                                                   data-decimals="2"
+                                                   data-maxboostedstep="10000000" data-prefix="￥"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label">
+                                                引流费分成 <span class="symbol required"></span>
+                                            </label>
+                                            <input ng-model="goods.promoteFee" type="number" value="10"
+                                                   name="promoteFee"
+                                                   touchspin min="0" data-bts-step="0.01"
+                                                   data-min="0" data-max="1000000000" data-stepinterval="50"
+                                                   data-decimals="2"
+                                                   data-maxboostedstep="10000000" data-prefix="￥"/>
+                                        </div>
+
+                                        <div class="form-group col-md-3" ng-show="goods.factoryId">
+                                            <label class="control-label">
+                                                制造费分成 <span class="symbol required"></span>
+                                            </label>
+                                            <input ng-model="goods.factoryFee" type="number" value="0" name="factoryFee"
+                                                   touchspin min="0" data-bts-step="0.01"
+                                                   data-min="0" data-max="1000000000" data-stepinterval="50"
+                                                   data-decimals="2"
+                                                   data-maxboostedstep="10000000" data-prefix="￥"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label" for="weight">
+                                                重量(KG) <span class="symbol"></span>
+                                            </label>
+                                            <input ng-model="goods.weight" type="text" value="0" name="weight"
+                                                   touchspin id="weight" min="0.01" data-bts-step="0.01"
+                                                   data-min="0.01" data-max="1000000000" data-stepinterval="50"
+                                                   data-decimals="2"
+                                                   data-maxboostedstep="10000000"/>
+                                        </div>
+                                    </div>
+                                    <!--<div class="row">-->
+                                    <!--<div class="form-group col-md-3">-->
+                                    <!--<label class="control-label" for="deliveryFee">-->
+                                    <!--快递费用 <span class="symbol"></span>-->
+                                    <!--</label>-->
+                                    <!--<input ng-model="goods.deliveryFee" type="text" value="0" name="deliveryFee"-->
+                                    <!--touchspin id="deliveryFee" min="0" data-bts-step="0.01"-->
+                                    <!--data-min="0" data-max="1000000000" data-stepinterval="50"-->
+                                    <!--data-decimals="2"-->
+                                    <!--data-maxboostedstep="10000000" data-prefix="￥"/>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <div class="row">
+                                        <div class="col-md-12" id="imageUpload" ng-if="action != 'info'">
+                                            <a href="javascript:;" class="a-upload">
+                                                <input type="file" class="upload_file" id="uploadFile"
+                                                       placeholder="上传图片"
+                                                       onchange="angular.element(this).scope().uploadImage(this);">上传图片
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-3" ng-repeat="picUrl in picUrlList">
+                                                <span class="glyphicon glyphicon-remove"
+                                                      style="position:relative;float:right;z-index: 99"
+                                                      ng-click="deleteImage('picUrlList',$index)">
+                                                </span>
+                                                <img ng-src="{{picUrl}}" width="100%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success" ng-click="confirm(true)"
+                                            ng-if="status=='to_check'">
+                                        审核通过
+                                    </button>
+                                    <button type="submit" class="btn btn-success" ng-click="confirm(false)"
+                                            ng-if="status=='to_check'">
+                                        审核不通过
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" ng-click="form.submit(Form)"
+                                            ng-if="action != 'info'">
+                                        提 交
+                                    </button>
+                                    <button type="reset" class="btn btn-primary btn-o" ng-click="form.reset(Form)"
+                                            ng-if="action != 'info'">
+                                        重 置
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<pre class="margin-top-20">{{ picUrlList | json }}</pre>-->
+                        <!--<pre class="margin-top-20">{{ metas | json }}</pre>-->
+                        <!--<pre class="margin-top-20">{{ goods | json }}</pre>-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end: FORM VALIDATION -->
+</div>

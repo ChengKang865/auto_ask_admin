@@ -1,0 +1,426 @@
+<!-- start: MAIN NAVIGATION MENU -->
+<div class="navbar-title">
+    <span></span>
+</div>
+<ul class="main-navigation-menu" ng-controller="navCtrl">
+    <li ui-sref-active="active" data-ng-show="hasPermission('edit')">
+        <a ui-sref="app.face">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-home"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 数据报表 </span>
+                </div>
+            </div>
+        </a>
+    </li>
+    <li ng-class="{'active open':$state.includes('app.account')}">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title">账户管理</span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.account.passwordModify">
+                    <span class="title"> 修改密码 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-class="{'active open':$state.includes('app.config')}" data-ng-show="hasPermission('root')">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 配置管理 </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.config.deliveryFee">
+                    <span class="title">免邮费设置 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.config.banner">
+                    <span class="title">Banner管理 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.config.aboutUsList">
+                    <span class="title">关于我们 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.config.indexProduct">
+                    <span class="title">首页产品管理 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.config.activity">
+                    <span class="title">活动管理 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.config.serviceList">
+                    <span class="title">首页服务管理 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.config.exploreList">
+                    <span class="title">首页探索管理 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.config.howSelectList">
+                    <span class="title">如何选择</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.config.howBuyList">
+                    <span class="title">如何购买</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.config.howPayList">
+                    <span class="title">如何支付</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{'active open':$state.includes('app.merchant')}" data-ng-show="hasPermission('edit')">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 合作伙伴 </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.merchant.serviceProvider">
+                    <span class="title"> 服务店 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.merchant.mechanic">
+                    <span class="title"> 维修工 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.merchant.outlets">
+                    <span class="title"> 分销点 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.merchant.factory">
+                    <span class="title"> 合作工厂 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{'active open':$state.includes('app.product')}" data-ng-show="hasPermission('root')">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 产品/商品管理 </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.product.productCategory">
+                    <span class="title"> 产品类别管理 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.product.product">
+                    <span class="title"> 产品管理 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.product.goods">
+                    <span class="title"> 商品管理 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{'active open':$state.includes('app.card')}" data-ng-show="hasPermission('root')">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title">卡券管理</span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.cardList">
+                    <span class="title"> 卡券列表 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{'active open':$state.includes('app.order')}" data-ng-show="hasPermission('edit')">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 订单管理 </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.order.orderList">
+                    <span class="title"> 全部订单 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.order.onlineList">
+                    <span class="title"> 线上订单 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.order.offlineList">
+                    <span class="title"> 线下订单 </span>
+                </a>
+            </li>
+            <!--<li ui-sref-active="active">-->
+                <!--<a ui-sref="app.order.partnerPendingList">-->
+                    <!--<span class="title"> 合作商无货订单 </span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--<li ui-sref-active="active">-->
+                <!--<a ui-sref="app.order.serviceProviderPendingList">-->
+                    <!--<span class="title"> 服务店无货订单 </span>-->
+                <!--</a>-->
+            <!--</li>-->
+        </ul>
+    </li>
+
+    <li ui-sref-active="active" data-ng-show="hasPermission('check')">
+        <a ui-sref="app.refund.orderList">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-bag"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 退款管理 </span>
+                </div>
+            </div>
+        </a>
+    </li>
+
+    <li ng-class="{'active open':$state.includes('app.share')}" data-ng-show="hasPermission('check')">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 分成管理 </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.share.checkList">
+                    <span class="title"> 分成审核 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.share.assetsList">
+                    <span class="title"> 商户资产 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.share.extraApply">
+                    <span class="title"> 提现申请</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.share.extra">
+                    <span class="title"> 提现记录</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.share.factoryList">
+                    <span class="title"> 工厂分成 </span>
+                </a>
+            </li>
+            <!--<li ui-sref-active="active">-->
+                <!--<a ui-sref="app.share.partnerList">-->
+                    <!--<span class="title"> 合作商分成 </span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.share.outletsList">
+                    <span class="title"> 分销点分成 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.share.serviceProviderList">
+                    <span class="title"> 服务店分成 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.share.mechanicList">
+                    <span class="title"> 维修工分成 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ui-sref-active="active" data-ng-show="hasPermission('edit')">
+        <a ui-sref="app.users">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-bag"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 用户列表 </span>
+                </div>
+            </div>
+        </a>
+    </li>
+
+
+    <li ng-class="{'active open':$state.includes('app.comment')}" data-ng-show="hasPermission('edit')">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title">评价管理 </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.comment.list">
+                    <span class="title">评价列表 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{'active open':$state.includes('app.system')}" data-ng-show="hasPermission('root')">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 系统管理 </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.system.roleList">
+                    <span class="title"> 员工列表 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{'active open':$state.includes('app.notice')}" data-ng-show="hasPermission('edit')">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 公告管理 </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.notice.list">
+                    <span class="title"> 公告列表 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{'active open':$state.includes('app.express')}" data-ng-show="hasPermission('root')">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 快递管理 </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.express.typeList">
+                    <span class="title"> 快递类型列表 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.express.templateList">
+                    <span class="title"> 快递模板列表 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li ng-class="{'active open':$state.includes('app.wx')}" data-ng-show="hasPermission('weixin')">
+        <a href="javascript:void(0)">
+            <div class="item-content">
+                <div class="item-media">
+                    <i class="ti-settings"></i>
+                </div>
+                <div class="item-inner">
+                    <span class="title"> 微信管理 </span><i class="icon-arrow"></i>
+                </div>
+            </div>
+        </a>
+        <ul class="sub-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.wx.qrCodeInfoList">
+                    <span class="title"> 微信二维码列表 </span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.wx.userInfoList">
+                    <span class="title"> 微信用户列表 </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+</ul>
+<!-- end: MAIN NAVIGATION MENU -->

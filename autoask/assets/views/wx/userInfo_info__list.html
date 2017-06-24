@@ -1,0 +1,64 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">微信用户管理</h1>
+            <!--<span class="mainDescription"></span>-->
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start: 快递类型列表 -->
+<div class="container-fluid container-fullw" ng-controller="userInfoListCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row margin-bottom-30">
+            <div class="col-md-3">
+                <label for="">名称</label>
+                <input placeholder="昵称" type="text" class="form-control" ng-model="criteria.nickName"/>
+            </div>
+
+            <div class="col-md-1 margin-top-22">
+                <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i class="fa fa-find"></i>查询</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="table-responsive">
+                <table ng-table="tableParams" class="table" cg-busy="{promise:loadingPromise}">
+                    <tbody ng-repeat="p in data">
+                            <tr id="tr{{p.qrCodeInfoId}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                            <td class="rowTd" data-title="'创建时间'">{{p.createTime}}</td>
+                            <td class="rowTd" data-title="'昵称'">{{p.nickName}}</td>
+                            <td class="rowTd" data-title="'openid'">{{p.openId}}</td>
+                            <td class="rowTd" data-title="'性别'">{{p.sexName}}</td>
+                            <td class="rowTd" data-title="'关注状态'">{{p.subscribeName}}</td>
+                            <td class="rowTd" data-title="'所在地区'">{{p.province}}-{{p.city}}</td>
+                                <td class="rowTd" data-title="'头像'">
+                                    <img title="点击放大查看" width="45px;" height="45px;" src="{{p.headImgUrl}}" ng-click="seeImage(p.headImgUrl)">
+                                </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--头像图片弹框-->
+        <div class="prompt-container" ng-class="{'show': imgView, 'hide': !imgView}">
+            <div class="panel panel-white no-radius autoask-pannel">
+                <div class="panel-heading text-left">微信头像</div>
+                <div class="panel-body">
+                    <img style="width: 250px;height: 250px;" src="{{seeImgUrl}}">
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <button type="button" class="btn btn-wide btn-ask-primary" ng-click="hideImgView()">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

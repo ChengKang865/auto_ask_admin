@@ -1,0 +1,63 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">商户资产</h1>
+            <!--<span class="mainDescription"></span>-->
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start: 订单列表 -->
+<div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+    <div class="row">
+        <div class="col-md-12">
+            <div ng-controller="assetsListCtrl">
+                <div class="table-responsive">
+                    <div class="row margin-bottom-10">
+                        <div class="col-md-12 padding-left-0">
+                            <div class="col-md-2">
+                                <label>
+                                    商户类型
+                                </label>
+                                <select  class="form-control" name="merchantType" id="merchantType" ng-model="criteria.merchantType" ng-init="criteria.merchantType = 'partner'">
+                                    <!--<option value="partner">合作商</option>-->
+                                    <option value="service_provider">服务店</option>
+                                    <option value="outlets">分销点</option>
+                                    <option value="mechanic">维修工</option>
+                                    <option value="factory">工厂</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label>
+                                    商户名称
+                                </label>
+                                <input ng-model="criteria.name" class="form-control"/>
+                            </div>
+
+                            <div class="col-md-1" style="margin-top: 22px">
+                                <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i
+                                        class="fa fa-find"></i>查询
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <table ng-table="tableParams" class="table" >
+                        <tbody ng-repeat="p in data">
+                        <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                            <td class="rowTd" data-title="'商户类型'">{{p.merchantType | merchantTypeZh}}</td>
+                            <td class="rowTd" data-title="'商户名称'">{{p.merchantName}}</td>
+                            <td class="rowTd" data-title="'资产总额'">{{p.incomeAmount}}</td>
+                            <td class="rowTd" data-title="'现有资产总额'">{{p.balance}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: 合作伙伴列表 -->

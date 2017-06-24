@@ -1,0 +1,119 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">商品</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start: 商品列表 -->
+<div class="container-fluid container-fullw">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- /// controller:  'ngTableCtrl6' -  localtion: assets/js/controllers/ngTableCtrl.js /// -->
+            <div ng-controller="goodsCtrl">
+                <div class="table-responsive">
+                    <div class="row margin-bottom-10">
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <label for="productCategory">
+                                    产品类别
+                                </label>
+                                <select class="form-control" id="productCategory" name="productCategory"
+                                        ng-model="productCategoryId" ng-change="productCategoryChanged()">
+                                    <option value="">不限</option>
+                                    <option ng-repeat="p in productCategories" value="{{p.productCategoryId}}">
+                                        {{p.name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="product">
+                                    产品
+                                </label>
+                                <select class="form-control" id="product" name="product" ng-model="productId"
+                                        ng-change="productChanged()">
+                                    <option ng-repeat="p in products" value="{{p.productId}}">{{p.name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-1" style="margin-top: 22px">
+                                <button class="btn btn-wide btn-primary" ng-click="query()"><i class="fa fa-find"></i>查询
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button class="btn btn-wide btn-ask-primary" ng-click="add()"><i class="fa fa-plus"></i>添加商品
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 padding-right-0">
+                            <table ng-table="tableParams" class="table" cg-busy="{promise:loadingPromise}">
+                                <tbody ng-repeat="p in data">
+                                <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                                    <td class="rowTd" data-title="'商品名称'">{{p.name}}</td>
+                                    <td class="rowTd" data-title="'名称缩写'">{{p.nameEn}}</td>
+                                    <td class="rowTd" data-title="'创建时间'">{{p.createTime}}</td>
+                                    <td class="rowTd" data-title="'审核状态'">
+                                        <span ng-if="(p.status == 'to_check') || (p.status === 'checked' && p.goodsSnapshotId !== p.checkSnapshotId)" style="color:#ff0000">待审核</span>
+                                        <span ng-if="p.status === 'checked' && p.goodsSnapshotId === p.checkSnapshotId">已审核</span>
+                                    </td>
+                                    <td class="rowTd" data-title="'上线状态'">
+                                        <div class="btn btn-ask-view btn-sm"
+                                             ng-if=" p.saleFlag">已上线
+                                        </div>
+                                        <div class="btn btn-ask-view btn-sm"
+                                             ng-if="!p.saleFlag">已下线
+                                        </div>
+                                    </td>
+                                    <td class="rowTd text-right">
+                                        <input type=button class="btn btn-ask-view btn-sm"
+                                               id="viewRowBtn{{p.goodsId}}"
+                                               value="详情" ng-click="info(p.goodsId)">
+                                    </td>
+                                    <td class="rowTd text-right" ng-if="(p.status == 'to_check') || (p.status === 'checked' && p.goodsSnapshotId !== p.checkSnapshotId)">
+                                        <input type=button class="btn btn-ask-modify btn-sm"
+                                               id="viewCheckRowBtn{{p.goodsId}}"
+                                               value="审核" ng-click="infoToCheck(p.goodsId)">
+                                    </td>
+                                    <td class="rowTd text-right"
+                                        ng-if="p.status=='checked' && p.saleFlag && p.goodsSnapshotId === p.checkSnapshotId">
+                                        <input type=button class="btn btn-ask-modify btn-sm"
+                                               id="editRowBtn{{p.goodsId}}"
+                                               value="修改" ng-click="edit(p.goodsId)">
+                                    </td>
+                                    <td class="rowTd text-right"
+                                        ng-if="p.status=='to_check'">
+                                        <input type=button class="btn btn-ask-del btn-sm"
+                                               id="delRowBtn{{p.goodsId}}"
+                                               value="删除" ng-click="delete(p.goodsId)">
+                                    </td>
+                                    <td class="rowTd text-right"
+                                        ng-if="p.status=='checked' && p.saleFlag">
+                                        <input type=button class="btn btn-ask-del btn-sm"
+                                               id="online{{p.goodsId}}"
+                                               value="下线" ng-click="offline(p.goodsId)">
+                                    </td>
+                                    <td class="rowTd text-right"
+                                        ng-if="p.status=='checked' && !p.saleFlag">
+                                        <input type=button class="btn btn-ask-del btn-sm"
+                                               id="offline{{p.goodsId}}"
+                                               value="上线" ng-click="online(p.goodsId)">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: 合作伙伴列表 -->

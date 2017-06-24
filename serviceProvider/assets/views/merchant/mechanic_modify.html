@@ -1,0 +1,102 @@
+<div ng-controller="mechanicDetailCtrl">
+    <!-- start: PAGE TITLE -->
+    <section id="page-title">
+        <div class="row">
+            <div class="col-sm-8">
+                <h1 class="mainTitle">维修工{{action | actionZh}}</h1>
+            </div>
+            <div ncy-breadcrumb></div>
+        </div>
+    </section>
+    <!-- end: PAGE TITLE -->
+
+    <!--start: 维修工详情-->
+    <div class="container-fluid container-fullw bg-white">
+        <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+            <div class="row padding-top-20">
+                <div class="col-md-12">
+                    <form name="Form" id="form1" novalidate class="autoask-form">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>
+                                        维修工
+                                    </legend>
+
+                                    <div class="form-group margin-top-remove"
+                                         ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                        <label class="control-label col-md-3">
+                                            姓名
+                                            <span class="symbol required"></span>
+                                        </label>
+                                        <input type="text" placeholder="维修工名称" class="col-md-3" name="name"
+                                               ng-model="mechanic.name"
+                                               required/>
+                                    </div>
+
+                                    <div class="form-group margin-top-remove"
+                                         ng-class="{'has-error':Form.gender.$dirty && Form.gender.$invalid, 'has-success':Form.gender.$valid}">
+                                        <label class="control-label col-md-3">
+                                            性别
+                                            <span class="symbol required"></span>
+                                        </label>
+                                        <select class="col-md-3" name="gender" ng-model="mechanic.gender" required>
+                                            <option value="" disabled>请选择</option>
+                                            <option value="male">男</option>
+                                            <option value="female">女</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group margin-top-remove"
+                                         ng-class="{'has-error':Form.age.$dirty && Form.age.$invalid, 'has-success':Form.age.$valid}">
+                                        <label class="control-label col-md-3">
+                                            年龄
+                                            <span class="symbol required"></span>
+                                        </label>
+                                        <input type="number" placeholder="年龄" class="col-md-3"
+                                               name="age" required ng-model="mechanic.age"/>
+                                    </div>
+
+                                    <div class="form-group margin-top-remove"
+                                         ng-class="{'has-error':Form.workType.$dirty && Form.workType.$invalid, 'has-success':Form.workType.$valid}">
+                                        <label class="control-label col-md-3">
+                                            工种
+                                            <span class="symbol required"></span>
+                                        </label>
+                                        <select name="workType" class="col-md-3" required ng-model="mechanic.workType">
+                                            <option value="" disabled>请选择</option>
+                                            <option value="metal">钣金</option>
+                                            <option value="paint">油漆</option>
+                                            <option value="electrical">机电</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group margin-top-remove"
+                                         ng-class="{'has-error':Form.phone.$dirty && Form.phone.$invalid, 'has-success':Form.phone.$valid}">
+                                        <label class="control-label col-md-3">
+                                            手机号码
+                                            <span class="symbol required"></span>
+                                        </label>
+                                        <input type="text" placeholder="手机号码" class="col-md-3"
+                                               name="phone" required ng-model="mechanic.phone"/>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="row" ng-if="action !== 'info'">
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-ask-primary" ng-click="form.submit(Form)">
+                                            提 交
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end: 活动管理-->
+</div>

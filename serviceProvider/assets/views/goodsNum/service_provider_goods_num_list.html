@@ -1,0 +1,92 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">本店库存</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!--start: 工厂库存-->
+<div class="container-fluid container-fullw" ng-controller="goodsNumListCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row">
+            <input type="text" ng-model="criteria.merchantType" style="display: none;"
+                   ng-init="criteria.merchantType = 'service_provider'">
+            <!--start: 查询 -->
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-12 margin-bottom-5 clearfix">
+                        <div class="col-md-3 padding-left-0">
+                            <label for="productCategoryId">所属产品类别</label>
+                            <select class="form-control" id="productCategoryId"
+                                    ng-model="criteria.productCategoryId"
+                                    ng-change="productCategoryChanged()"
+                                    required>
+                                <option value="">所有</option>
+                                <option ng-repeat="p in productCategoryList"
+                                        value="{{p.productCategoryId}}">{{p.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 padding-left-0">
+                            <label for="productId">
+                                所属产品
+                            </label>
+                            <select class="form-control" id="productId" name="productId"
+                                    ng-model="criteria.productId" ng-change="productChanged()"
+                                    required>
+                                <option value="">所有</option>
+                                <option ng-repeat="p in productList" value="{{p.productId}}">{{p.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 padding-left-0">
+                            <label for="goodsId">
+                                所属商品
+                            </label>
+                            <select class="form-control" id="goodsId" name="goodsId"
+                                    ng-model="criteria.goodsId"
+                                    required>
+                                <option value="">所有</option>
+                                <option ng-repeat="g in goodsList" value="{{g.goodsId}}">{{g.name}}
+                            </select>
+                        </div>
+                        <div class="col-md-3 padding-left-0">
+                            <label for="">商品名称</label>
+                            <input placeholder="商品名称" type="text" class="form-control" ng-model="criteria.goodsName"/>
+                        </div>
+                        <div class="col-md-2 padding-left-0">
+                            <button class="btn btn-wide btn-ask-primary margin-top-22" ng-click="query()"><i
+                                    class="fa fa-find"></i>查询
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end: 查询 -->
+            <div class="row margin-top-30">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <!--start: 库存列表-->
+                        <table ng-table="tableParams" class="table">
+                            <tbody ng-repeat="p in data">
+                            <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                                <td class="rowTd" data-title="'类别'">{{p.goods.product.name}}</td>
+                                <td class="rowTd" data-title="'商品名称'">
+                                    {{p.goods.name}}
+                                </td>
+                                <td class="rowTd" data-title="'现有库存'">{{p.num}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!--end: 库存列表-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end: 工厂库存-->

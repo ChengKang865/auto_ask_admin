@@ -1,0 +1,138 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle"> 线上未处理订单 </h1>
+            <!--<span class="mainDescription"></span>-->
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start: 订单列表 -->
+<div class="container-fluid container-fullw" ng-controller="onlineListCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row margin-bottom-30">
+            <input type="text" style="display: none;" ng-model="criteria.statusCode" ng-init="criteria.statusCode = 7">
+            <div class="col-md-3 padding-left-0">
+                <label for="startTime">
+                    起始日期
+                </label>
+                <input id="startTime" ng-model="criteria.startTime" class="form-control"
+                       onclick="WdatePicker({onpicked: function(){$(this).trigger('change')}})"/>
+            </div>
+            <div class="col-md-3 padding-left-0">
+                <label for="endTime">
+                    结束日期
+                </label>
+                <input id="endTime" ng-model="criteria.endTime" class="form-control"
+                       onclick="WdatePicker({onpicked: function(){$(this).trigger('change')}})"/>
+            </div>
+
+            <div class="col-md-3 padding-left-0">
+                <label for="">输入订单号</label>
+                <input placeholder="输入订单号" type="text" class="form-control" ng-model="criteria.orderId"/>
+            </div>
+
+            <div class="col-md-3 padding-left-0">
+                <label for="productCategoryId">所属产品类别</label>
+                <select class="form-control" id="productCategoryId"
+                        ng-model="criteria.productCategoryId"
+                        ng-change="productCategoryChanged()"
+                        required>
+                    <option value="">所有</option>
+                    <option ng-repeat="p in productCategoryList"
+                            value="{{p.productCategoryId}}">{{p.name}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3 padding-left-0">
+                <label for="productId">
+                    所属产品
+                </label>
+                <select class="form-control" id="productId" name="productId"
+                        ng-model="criteria.productId" ng-change="productChanged()"
+                        required>
+                    <option value="">所有</option>
+                    <option ng-repeat="p in productList" value="{{p.productId}}">{{p.name}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3 padding-left-0">
+                <label for="goodsId">
+                    所属商品
+                </label>
+                <select class="form-control" id="goodsId" name="goodsId"
+                        ng-model="criteria.goodsId"
+                        required>
+                    <option value="">所有</option>
+                    <option ng-repeat="g in goodsList" value="{{g.id}}">{{g.name}}
+                </select>
+            </div>
+
+            <div class="col-md-3 padding-left-0">
+                <label for="">商品名称</label>
+                <input placeholder="商品名称" type="text" class="form-control" ng-model="criteria.goodsName"/>
+            </div>
+
+            <div class="col-md-1 margin-top-22">
+                <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i class="fa fa-find"></i>查询</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="table-responsive">
+                <table ng-table="tableParams" class="table" cg-busy="{promise:loadingPromise}">
+                    <tbody ng-repeat="p in data">
+                    <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                        <td class="rowTd" data-title="'订单号'">{{p.orderId}}</td>
+                        <td class="rowTd" data-title="'下单时间'">{{p.createTime}}</td>
+                        <td class="rowTd" data-title="'订单总额'">{{p.snapshotPrice}}</td>
+                        <td class="rowTd" data-title="'本店预计分成'">{{p.orderDelivery.preShare}}</td>
+                        <td class="rowTd" data-title="'收货人'">{{p.user.phone}}</td>
+                        <td class="rowTd" data-title="'状态'">{{p.status | orderInfoStatusZh}}</td>
+                        <td class="rowTd text-right">
+                            <a href="" class="btn btn-ask-modify btn-sm" ng-if="p.status === 'payed'"
+                               ng-click="showPromote(p.orderId)">发货</a>
+                        </td>
+                        <td class="rowTd text-right">
+                            <a href="" class="btn btn-ask-modify btn-sm" ng-if="p.status === 'payed'"
+                               ng-click="pendingOnline(p.orderId)">无货</a>
+                        </td>
+                        <td class="rowTd text-right">
+                            <a href="#/app/order/detail/{{p.orderId}}" type=button
+                               class="btn btn-ask-view btn-sm">详情</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="prompt-container" ng-class="{'show': displayPromote, 'hide': !displayPromote}">
+        <div class="panel panel-white no-radius autoask-pannel">
+            <div class="panel-heading text-left">物流公司</div>
+            <div class="panel-body text-left">
+                <div class="row padding-left-15 padding-right-15 margin-bottom-15">
+                    <label for="" class="col-md-4 padding-left-0">物流公司</label>
+                    <input placeholder="物流公司" type="text" class="form-control"
+                           ng-model="expressCompany"/>
+                </div>
+                <div class="row padding-left-15 padding-right-15">
+                    <label for="" class="col-md-4 padding-left-0">物流单号</label>
+                    <input placeholder="物流单号" type="text" class="form-control"
+                           ng-model="deliverySerial"/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <button type="button" class="btn btn-wide btn-ask-primary" ng-click="confirmOnline()">确认</button>
+                    <button type="button" class="btn btn-wide btn-ask-primary" ng-click="hidePromote()">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: 合作伙伴列表 -->

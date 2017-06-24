@@ -1,0 +1,118 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">微信二维码管理</h1>
+            <!--<span class="mainDescription"></span>-->
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start: 快递类型列表 -->
+<div class="container-fluid container-fullw" ng-controller="qrCodeInfoListCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row margin-bottom-30">
+            <div class="col-md-3">
+                <label for="">名称</label>
+                <input placeholder="名称" type="text" class="form-control" ng-model="criteria.name"/>
+            </div>
+
+            <div class="col-md-1 margin-top-22">
+                <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i class="fa fa-find"></i>查询</button>
+            </div>
+        </div>
+
+        <!-- 添加按钮 -->
+        <div class="row margin-bottom-10 text-right" ng-click="showqrCodeInfoAdd()">
+            <a class="btn btn-wide btn-ask-primary"><i class="fa fa-plus"></i>添加二维码</a>
+        </div>
+
+        <div class="row">
+            <div class="table-responsive">
+                <table ng-table="tableParams" class="table" cg-busy="{promise:loadingPromise}">
+                    <tbody ng-repeat="p in data">
+                            <tr id="tr{{p.qrCodeInfoId}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                            <td class="rowTd" data-title="'创建时间'">{{p.createDate}}</td>
+                            <td class="rowTd" data-title="'名称'">{{p.name}}</td>
+                            <td class="rowTd" data-title="'类型'">{{p.typeName}}</td>
+                            <td class="rowTd" data-title="'二维码状态'">
+                                <lable ng-if="p.expireSecondsName === '失效'" style="color: red">失效</lable>
+                                <label ng-if="p.expireSecondsName === '未失效'">未失效</label>
+                            </td>
+                            <td class="rowTd" data-title="'编号'">{{p.qrCodeInfoId}}</td>
+                            <td class="rowTd" data-title="'订阅次数'">{{p.subscribeCount}}</td>
+                            <td class="rowTd" data-title="'订阅占总比'">{{p.subscribePercentage}}</td>
+                            <td class="rowTd" data-title="'二维码'">
+                                <img title="点击放大查看" width="45px;" height="45px;" src="{{p.imgUrl}}" ng-click="seeImage(p.imgUrl)">
+                            </td>
+                            <td class="rowTd text-right">
+                                <!--<a  class="btn btn-ask-modify btn-sm"
+                                   ng-if="p.type === 'QR_SCENE'|| p.type === 'QR_LIMIT_SCENE' || p.type === 'QR_LIMIT_STR_SCENE'"
+                                   ng-click="DownLoadReportIMG(p.imgUrl)">
+                                    下载二维码
+                                </a>-->
+
+                                <a href="" class="btn btn-ask-modify btn-sm"
+                                   ng-if="p.type === 'QR_SCENE'|| p.type === 'QR_LIMIT_SCENE' || p.type === 'QR_LIMIT_STR_SCENE'"
+                                   ng-click="deleteQR(p.qrCodeInfoId)">
+                                    删除
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!- 增加弹框 -->
+        <div class="prompt-container" ng-class="{'show': updateExpressFlag, 'hide': !updateExpressFlag}">
+            <div class="panel panel-white no-radius autoask-pannel">
+                <div class="panel-heading text-left">二维码信息</div>
+                <div class="panel-body text-left">
+                    <div class="row padding-left-15 padding-right-15 margin-bottom-15">
+                        <label for="" class="col-md-4 padding-left-0">名称</label>
+                        <input placeholder="二维码名称" type="text" class="form-control"
+                               ng-model="name"/>
+                    </div>
+                    <div class="row padding-left-15 padding-right-15">
+                        <label for="" class="col-md-4 padding-left-0">类型</label>
+                        <select class="form-control" id="type" name="type"
+                                ng-model="type" ng-click="show_or_hide_div()">
+                            <option  value="QR_LIMIT_STR_SCENE">永久</option>
+                            <option  value="QR_SCENE">临时</option>
+                        </select>
+                    </div>
+                    <div class="row padding-left-15 padding-right-15 margin-bottom-15" ng-class="{'show': expireSecondsDiv, 'hide': !expireSecondsDiv}">
+                        <label for="" class="col-md-4 padding-left-0">失效时间</label>
+                        <input placeholder="请填写1-30" type="text" class="form-control"
+                               ng-model="expireSeconds"/>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <button type="button" class="btn btn-wide btn-ask-primary" ng-click="saveInfo()">添加</button>
+                        <button type="button" class="btn btn-wide btn-ask-primary" ng-click="hidePromote()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--二维码弹框-->
+        <div class="prompt-container" ng-class="{'show': imgView, 'hide': !imgView}">
+            <div class="panel panel-white no-radius autoask-pannel">
+                <div class="panel-heading text-left">微信二维码</div>
+                <div class="panel-body">
+                    <img style="width: 250px;height: 250px;" src="{{seeImgUrl}}">
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <button type="button" class="btn btn-wide btn-ask-primary" ng-click="hideImgView()">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

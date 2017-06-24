@@ -1,0 +1,81 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">活动管理</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!--start: 活动列表-->
+<div class="container-fluid container-fullw" ng-controller="activityListCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row" style="padding-top: 20px">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <!--start: 查询 -->
+                    <div class="margin-bottom-10">
+                        <div class="margin-bottom-10">
+                            <div class="col-md-12 margin-bottom-30">
+
+                                <div class="col-md-2">
+                                    <label>
+                                        活动名称
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="活动名称"/>
+                                </div>
+
+                                <div class="col-md-1 margin-top-22">
+                                    <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i
+                                            class="fa fa-find"></i>查询
+                                    </button>
+                                </div>
+
+                                <div class="col-md-1  margin-top-22">
+                                    <a href="#/app/config/activity/add"
+                                       class="btn btn-wide btn-ask-primary"><i class="fa fa-plus"></i>添加活动</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end: 查询 -->
+
+                    <!--start: 活动列表-->
+                    <table ng-table="tableParams" class="table">
+                        <tbody ng-repeat="item in dataList">
+                        <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                            <td class="rowTd" data-title="'渠道'">{{item.channel}}</td>
+                            <td class="rowTd" data-title="'活动名称'">{{item.title}}</td>
+                            <td class="rowTd" data-title="'活动地址'">
+                                <span ng-if="item.channel === 'pc'">http://www.autoask.com/pc/index.html#/pc/activity/{{item.id}}</span>
+                               <span ng-if="item.channel === 'm'">http://www.autoask.com/mobile/index.html#/m/activity/{{item.id}}</span>
+                            </td>
+                            <div class="pull-right margin-right-10">
+                                <td class="rowTd">
+                                    <div class="pull-right">
+                                        <a href="#/app/config/activity/detail/{{item.id}}"
+                                           class="btn btn-ask-modify btn-sm">详情</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="#/app/config/activity/modify/{{item.id}}"
+                                           class="btn btn-ask-modify btn-sm">修改</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <input type=button class="btn btn-ask-del btn-success btn-sm" value="删除"
+                                               ng-click="delete(item.id)">
+                                    </div>
+                                </td>
+                            </div>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--end: 活动列表-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--start: 活动列表-->
+

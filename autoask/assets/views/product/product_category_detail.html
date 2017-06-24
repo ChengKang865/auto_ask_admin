@@ -1,0 +1,85 @@
+<div ng-controller="productCategoryDetailCtrl">
+    <!-- start: PAGE TITLE -->
+    <section id="page-title">
+        <div class="row">
+            <div class="col-sm-8">
+                <h1 class="mainTitle">产品类别{{action | actionZh}}</h1>
+            </div>
+            <div ncy-breadcrumb></div>
+        </div>
+    </section>
+    <!-- end: PAGE TITLE -->
+    <!-- start: FORM VALIDATION -->
+    <div class="container-fluid container-fullw bg-white">
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <form name="Form" id="form1" novalidate>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>
+                                        基本信息
+                                    </legend>
+                                    <!--产品类别名称-->
+                                    <div class="form-group col-md-6"
+                                         ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                        <label class="control-label">
+                                            种类名称 <span class="symbol required"></span>
+                                        </label>
+                                        <input type="text" placeholder="商品种类名称英文缩写" class="form-control"
+                                               name="name" ng-model="productCategory.name" required/>
+                                        <span class="error text-small block"
+                                              ng-if="Form.name.$dirty && Form.name.$invalid">产品种类不可为空</span>
+                                        <span class="success text-small" ng-if="Form.name.$valid">产品种类合法</span>
+                                    </div>
+                                    <!--产品类别名称缩写-->
+                                    <div class="form-group col-md-6"
+                                         ng-class="{'has-error':Form.nameEn.$dirty && Form.nameEn.$invalid, 'has-success':Form.nameEn.$valid}">
+                                        <label class="control-label">
+                                            种类名称缩写(英文缩写/拼音) <span class="symbol required"></span>
+                                        </label>
+                                        <input type="text" placeholder="商品种类名称英文缩写" class="form-control"
+                                               name="nameEn" ng-model="productCategory.nameEn" required/>
+                                        <span class="error text-small block"
+                                              ng-if="Form.nameEn.$dirty && Form.nameEn.$invalid">缩略名不可为空</span>
+                                        <span class="success text-small" ng-if="Form.nameEn.$valid">缩略名合法</span>
+                                    </div>
+                                    <!--产品类别服务费-->
+                                    <div class="form-group col-md-6"
+                                         ng-class="{'has-error':Form.serviceFee.$dirty && Form.serviceFee.$invalid, 'has-success':Form.serviceFee.$valid}">
+                                        <label class="control-label">
+                                            服务费 <span class="symbol required"></span>
+                                        </label>
+                                        <input ng-model="productCategory.serviceFee" type="number" value="10"
+                                               name="serviceFee"
+                                               touchspin min="0.01" data-bts-step="0.01"
+                                               data-min="0.01" data-max="1000000000" data-stepinterval="50"
+                                               data-decimals="2"
+                                               data-maxboostedstep="10000000" data-prefix="￥"/>
+                                    </div>
+
+                                </fieldset>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary" ng-click="form.submit(Form)">
+                                            提 交
+                                        </button>
+                                        <button type="reset" class="btn btn-primary btn-o" ng-click="form.reset(Form)">
+                                            重 置
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end: FORM VALIDATION -->
+</div>

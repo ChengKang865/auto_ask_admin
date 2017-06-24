@@ -1,0 +1,51 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">如何选择</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!--start: 首页探索管理列表-->
+<div class="container-fluid container-fullw" ng-controller="helpRichTextListCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}" ng-init=" type='HOW_SELECT' ">
+        <div class="row">
+            <!--start: 查询 -->
+            <div class="margin-bottom-10">
+                <div class="margin-bottom-10">
+                    <div class="col-md-12 margin-bottom-30 clearfix padding-left-0">
+                        <div class="col-md-1 margin-top-22 pull-right">
+                            <a href="#/app/config/helpRichTextEdit/HOW_SELECT/add"
+                               class="btn btn-wide btn-ask-primary"><i class="fa fa-plus"></i>如何选择</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end: 查询 -->
+            <div class="row" style="padding-top: 20px">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <!--start: 首页探索列表-->
+                        <table ng-table="tableParams" class="table">
+                            <tbody ng-repeat="item in dataList">
+                            <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                                <td class="rowTd" data-title="'标题'">{{item.title}}</td>
+                                <td class="rowTd text-right">
+                                    <a href="#/app/config/helpRichText/detail/{{item.id}}" class="btn btn-ask-view btn-sm margin-right-20">详情</a>
+                                    <a href="#/app/config/helpRichTextEdit/HOW_SELECT/modify/{{item.id}}" class="btn btn-ask-modify btn-sm margin-right-20">修改</a>
+                                    <input type=button class="btn btn-ask-del btn-success btn-sm margin-right-20" value="删除" ng-click="delete(item.id)">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!--end: 首页探索列表-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--start: 首页探索管理列表-->
+</div>

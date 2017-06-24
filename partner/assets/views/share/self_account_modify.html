@@ -1,0 +1,63 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">账户管理</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!--start: 活动管理-->
+<div class="container-fluid container-fullw bg-white" ng-controller="selfAccountModifyCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+
+        <div class="row padding-top-20">
+            <form name="Form" id="form1" novalidate class="autoask-form">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group margin-top-remove">
+                            <div class="col-md-12">
+                                <table class="autoask-table table">
+                                    <caption class="clearfix">账户设置
+                                        <a href="#" class="pull-right btn btn-wide btn-ask-primary" ng-click="form.submit(Form)">保存</a>
+                                    </caption>
+                                    <tbody>
+                                    <tr ng-class="{'has-error':Form.preAliPayAccount.$dirty && Form.preAliPayAccount.$invalid, 'has-success':Form.preAliPayAccount.$valid}">
+                                        <td class="row">支付宝账户 <span class="symbol required"></span></td>
+                                        <td class="row">
+                                            <input class="col-md-3" name="preAliPayAccount" type="text"
+                                                   ng-model="preAliPayAccount" required/>
+                                        </td>
+                                    </tr>
+                                    <tr ng-class="{'has-error':Form.preAliPayUserName.$dirty && Form.preAliPayUserName.$invalid, 'has-success':Form.preAliPayUserName.$valid}">
+                                        <td class="row">收款人 <span class="symbol required"></span></td>
+                                        <td class="row">
+                                            <input class="col-md-3" type="text" ng-model="preAliPayUserName"
+                                                   name="preAliPayUserName" required/>
+                                        </td>
+                                    </tr>
+                                    <tr ng-class="{'has-error':Form.nextAliPayAccount.$dirty && Form.nextAliPayAccount.$invalid, 'has-success':Form.nextAliPayAccount.$valid}">
+                                        <td class="row">确认支付宝账户 <span class="symbol required"></span></td>
+                                        <td class="row">
+                                            <input class="col-md-3" type="text" name="nextAliPayAccount" ng-model="nextAliPayAccount" required/>
+                                        </td>
+                                    </tr>
+                                    <tr ng-class="{'has-error':Form.nextAliPayUserName.$dirty && Form.nextAliPayUserName.$invalid, 'has-success':Form.nextAliPayUserName.$valid}">
+                                        <td class="">确认收款人 <span class="symbol required"></span></td>
+                                        <td class="">
+                                            <input class="col-md-3" type="text" name="nextAliPayUserName" ng-model="nextAliPayUserName" required/>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

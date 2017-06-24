@@ -1,0 +1,117 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">分销点</h1>
+            <span class="mainDescription">autoask的产品的促销渠道之一</span>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start: 分销点列表 -->
+<div class="container-fluid container-fullw" ng-controller="outletsListCtrl">
+    <div class="row" cg-busy="{promise:loadingPromise}">
+        <div class="col-md-12">
+            <div>
+                <div class="row margin-bottom-10">
+                    <div class="row margin-bottom-10">
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <label for="phone">
+                                    手机号码
+                                </label>
+                                <input type="text" placeholder="不限" id="phone" class="form-control" name="phone"
+                                       ng-model="phone"/>
+                            </div>
+                            <div class="col-md-1" style="margin-top: 22px">
+                                <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i
+                                        class="fa fa-find"></i>查询
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button class="btn btn-wide btn-ask-primary" ng-click="add()"><i class="fa fa-plus"></i>添加分销点
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table ng-table="tableParams" class="table">
+                        <tbody ng-repeat="p in data">
+                        <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'"
+                            cg-busy="{promise:loadingPromise}">
+                            <td class="rowTd" data-title="'分销点名称'">{{p.name}}</td>
+                            <td class="rowTd" data-title="'联系人'">{{p.contact}}</td>
+                            <td class="rowTd" data-title="'电话'">{{p.call}}</td>
+                            <td class="rowTd" data-title="'手机号'">{{p.phone}}</td>
+                            <td class="rowTd" data-title="'状态'">{{p.activated | activeStatusZh}}</td>
+                            <td class="rowTd text-center">
+                                <a href="javascript:;" class="btn btn-ask-view btn-sm" ng-if="!p.activated"
+                                   ng-click="displayActiveCode()">激活</a>
+                                <a href="javascript:;" class="btn btn-ask-view btn-sm" ng-if="p.activated"
+                                   ng-click="displayActiveCode()">重新激活</a>
+                            </td>
+                            <td class="rowTd text-right">
+                                <input type=button class="btn btn-ask-view btn-sm" id="viewRowBtn{{p.id}}"
+                                       value="详情" ng-click="info(p.id)">
+                            </td>
+                            <td class="rowTd text-right">
+                                <a href="#" ng-click="edit(p.id)"
+                                   class="btn btn-ask-modify btn-sm margin-right-20">修改</a>
+                            </td>
+                            <td class="rowTd text-right">
+                                <input type=button class="btn btn-ask-del btn-sm" id="delRowBtn{{p.id}}"
+                                       value="删除" ng-click="delete(p.id)">
+                            </td>
+                            <td class="rowTd text-right">
+                                <input type=button class="btn btn-ask-view btn-sm" value="绑定二维码"
+                                       ng-click="displayQRCode(p.id)">
+                            </td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--start: 模态输入框-->
+    <div class="prompt-container" ng-class="{'show': qrShowFlag, 'hide': !qrShowFlag}">
+        <div class="panel panel-white no-radius autoask-pannel">
+            <div class="panel-heading text-left">绑定二维码</div>
+            <div class="panel-body">
+                <input placeholder="二维码" type="text" class="form-control" ng-model="qrCode"/>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <button type="button" class="btn btn-wide btn-ask-primary" ng-click="bindQRCode()">确认</button>
+                    <button type="button" class="btn btn-wide btn-ask-primary" ng-click="hideQRCode()">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end: 模态输入框-->
+
+    <!--start: 二维码弹窗-->
+    <div id="qr-code-moal" class="modal fade autoask-madal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">激活</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <p><img ng-src="{{activeUrl}}" alt=""/></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ask-primary">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end: 二维码弹窗-->
+</div>
+<!-- end: 合作伙伴列表 -->

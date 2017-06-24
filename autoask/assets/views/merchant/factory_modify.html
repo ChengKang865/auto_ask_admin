@@ -1,0 +1,269 @@
+<div ng-controller="factoryDetailCtrl">
+    <!-- start: PAGE TITLE -->
+    <section id="page-title">
+        <div class="row">
+            <div class="col-sm-8">
+                <h1 class="mainTitle">合作工厂{{action | actionZh}}</h1>
+            </div>
+            <div ncy-breadcrumb></div>
+        </div>
+    </section>
+    <!-- end: PAGE TITLE -->
+
+    <!--start: 活动管理-->
+    <div class="container-fluid container-fullw bg-white">
+        <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+            <div class="row padding-top-20">
+                <div class="col-md-12">
+                    <!--start: 添加活动表单-->
+                    <form name="Form" id="form1" novalidate class="autoask-form">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>
+                                        基本信息
+                                    </legend>
+
+                                    <div class="form-group margin-top-remove">
+                                        <div class="col-md-12">
+                                            <table class="autoask-table table">
+                                                <caption class="clearfix">基本信息</caption>
+                                                <tbody>
+                                                <tr ng-class="{'has-error':Form.logoUrl.$dirty && Form.logoUrl.$invalid, 'has-success':Form.logoUrl.$valid}">
+                                                    <td class="col-md-2">LOGO <span class="symbol required"></span></td>
+                                                    <td class="col-md-10">
+                                                        <img ng-src="{{factory.logoUrl}}" alt="" width="100" height="100"/>
+                                                        <input style="display: none;" ng-model="factory.logoUrl" required
+                                                               name="logoUrl"/>
+                                                        <a href="javascript:;" class="a-upload"
+                                                           style="top: 28px;left: 15px;">
+                                                            <input type="file" class="upload_file" id="uploadLogo"
+                                                                   placeholder="上传LOGO"
+                                                                   onchange="angular.element(this).scope().uploadImage(this);">上传LOGO
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-class="{'has-error':Form.name.$dirty && Form.name.$invalid, 'has-success':Form.name.$valid}">
+                                                    <td class="col-md-2">工厂名称 <span class="symbol required"></span></td>
+                                                    <td class="col-md-10">
+                                                        <input type="text" placeholder="工厂名称" class="col-md-3"
+                                                               ng-model="factory.name"
+                                                               name="name" required/>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-class="{'has-error':Form.contact.$dirty && Form.contact.$invalid, 'has-success':Form.contact.$valid}">
+                                                    <td class="col-md-2">联系人 <span class="symbol required"></span></td>
+                                                    <td class="col-md-10">
+                                                        <input type="text" placeholder="联系人" class="col-md-3"
+                                                               ng-model="factory.contact"
+                                                               name="contact" required/>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-class="{'has-error':Form.call.$dirty && Form.call.$invalid, 'has-success':Form.call.$valid}">
+                                                    <td class="col-md-2">电话 <span class="symbol required"></span></td>
+                                                    <td class="col-md-10">
+                                                        <input type="text" placeholder="电话" class="col-md-3"
+                                                               name="call" ng-model="factory.call" required/>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-class="{'has-error':Form.phone.$dirty && Form.phone.$invalid, 'has-success':Form.phone.$valid}">
+                                                    <td class="col-md-2">手机 <span class="symbol required"></span></td>
+                                                    <td class="col-md-10">
+                                                        <input type="text" placeholder="手机" class="col-md-3"
+                                                               name="phone" ng-model="factory.phone" required/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">地址</td>
+                                                    <td class="col-md-10">
+                                                        <!-- 地址信息 -->
+                                                        <div class="row">
+                                                            <div class="col-md-2">
+                                                                <div class="form-group"
+                                                                     ng-class="{'has-error':Form.addressProvince.$dirty && Form.addressProvince.$invalid, 'has-success':Form.addressProvince.$valid}">
+                                                                    <label for="addressProvince">
+                                                                        省 <span class="symbol required"></span>
+                                                                    </label>
+                                                                    <select class="form-control" id="addressProvince"
+                                                                            name="addressProvince"
+                                                                            ng-model="factory.address.province"
+                                                                            ng-change="provinceChanged(factory.address.province)"
+                                                                            required>
+                                                                        <option value="" disabled>&nbsp;</option>
+                                                                        <option ng-repeat="p in provinces">{{p}}</option>
+                                                                    </select>
+                                                                    <span class="error text-small block"
+                                                                          ng-if="Form.addressProvince.$dirty && Form.addressProvince.$error.required">请选择省份</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <div class="form-group"
+                                                                     ng-class="{'has-error':Form.addressCity.$dirty && Form.addressCity.$invalid, 'has-success':Form.addressCity.$valid}">
+                                                                    <label for="addressCity">
+                                                                        市 <span class="symbol required"></span>
+                                                                    </label>
+                                                                    <select class="form-control" id="addressCity"
+                                                                            name="addressCity"
+                                                                            ng-model="factory.address.city"
+                                                                            ng-change="cityChanged(factory.address.province, factory.address.city)"
+                                                                            required>
+                                                                        <option value="" disabled>&nbsp;</option>
+                                                                        <option ng-repeat="c in cities">{{c}}</option>
+                                                                    </select>
+                                                                    <span class="error text-small block"
+                                                                          ng-if="Form.addressCity.$dirty && Form.addressCity.$error.required">请选择城市</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <div class="form-group"
+                                                                     ng-class="{'has-error':Form.addressRegion.$dirty && Form.addressRegion.$invalid, 'has-success':Form.addressRegion.$valid}">
+                                                                    <label for="addressRegion">
+                                                                        区 <span class="symbol required"></span>
+                                                                    </label>
+                                                                    <select class="form-control" id="addressRegion"
+                                                                            name="addressRegion"
+                                                                            ng-model="factory.address.region"
+                                                                            ng-change="regionChanged(factory.address.province, factory.address.city, factory.address.region)"
+                                                                            required>
+                                                                        <option value="" disabled>&nbsp;</option>
+                                                                        <option ng-repeat="r in regions">{{r}}</option>
+                                                                    </select>
+                                                                    <span class="error text-small block"
+                                                                          ng-if="Form.addressRegion.$dirty && Form.addressRegion.$error.required">请选择区</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <div class="form-group"
+                                                                     ng-class="{'has-error':Form.addressStreet.$dirty && Form.addressStreet.$invalid, 'has-success':Form.addressStreet.$valid}">
+                                                                    <label for="addressStreet">
+                                                                        街道 <span class="symbol required"></span>
+                                                                    </label>
+                                                                    <select class="form-control" id="addressStreet"
+                                                                            name="addressStreet"
+                                                                            ng-model="factory.address.street" required>
+                                                                        <option value="" disabled>&nbsp;</option>
+                                                                        <option ng-repeat="s in streets">{{s}}</option>
+                                                                    </select>
+                                                                    <span class="error text-small block"
+                                                                          ng-if="Form.addressStreet.$dirty && Form.addressStreet.$error.required">请填写街道</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group"
+                                                                     ng-class="{'has-error':Form.addressDetail.$dirty && Form.addressDetail.$invalid, 'has-success':Form.addressDetail.$valid}">
+                                                                    <label for="addressDetail">
+                                                                        详细地址 <span class="symbol required"></span>
+                                                                    </label>
+                                                                    <input type="text" placeholder="详细地址" id="addressDetail"
+                                                                           class="form-control" name="addressDetail"
+                                                                           ng-model="factory.address.detail" required/>
+                                                                    <span class="error text-small block"
+                                                                          ng-if="Form.addressDetail.$dirty && Form.addressDetail.$invalid">详细地址不可为空</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-class="{'has-error':Form.aliPayAccount.$dirty && Form.aliPayAccount.$invalid, 'has-success':Form.aliPayAccount.$valid}">
+                                                    <td class="col-md-2">支付宝帐号 <span class="symbol required"></span></td>
+                                                    <td class="col-md-10">
+                                                        <input type="text" placeholder="支付宝帐号" class="col-md-3"
+                                                               name="aliPayAccount" ng-model="factory.aliPayAccount"
+                                                               required/>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-class="{'has-error':Form.aliPayUserName.$dirty && Form.aliPayUserName.$invalid, 'has-success':Form.aliPayUserName.$valid}">
+                                                    <td class="col-md-2">支付宝用户名 <span class="symbol required"></span></td>
+                                                    <td class="col-md-10">
+                                                        <input type="text" placeholder="支付宝用户名" class="col-md-3"
+                                                               name="aliPayUserName" ng-model="factory.aliPayUserName"
+                                                               required/>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset>
+                                    <legend>
+                                        开票信息
+                                    </legend>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <table class="autoask-table table">
+                                                <caption class="clearfix">开票信息</caption>
+                                                <tbody>
+                                                <tr ng-class="{'has-error':Form.company.$dirty && Form.company.$invalid, 'has-success':Form.company.$valid}">
+                                                    <td class="col-md-2">公司名称</td>
+                                                    <td class="col-md-10">
+                                                        <input type="text" placeholder="公司名称" class="col-md-3"
+                                                               name="company"
+                                                               ng-model="factory.vatInvoice.company"/>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-class="{'has-error':Form.taxSerial.$dirty && Form.taxSerial.$invalid, 'has-success':Form.taxSerial.$valid}">
+                                                    <td class="col-md-2">税号</td>
+                                                    <td class="col-md-10">
+                                                        <input type="text" placeholder="公司名称" class="col-md-3"
+                                                               name="taxSerial"
+                                                               ng-model="factory.vatInvoice.taxSerial"/>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-class="{'has-error':Form.invoiceAddress.$dirty && Form.invoiceAddress.$invalid, 'has-success':Form.invoiceAddress.$valid}">
+                                                    <td class="col-md-2">地址</td>
+                                                    <td class="col-md-10">
+                                                        <input type="text" placeholder="地址" class="col-md-3"
+                                                               name="invoiceAddress"
+                                                               ng-model="factory.vatInvoice.address"/>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-class="{'has-error':Form.invoicePhone.$dirty && Form.invoicePhone.$invalid, 'has-success':Form.invoicePhone.$valid}">
+                                                    <td class="col-md-2">电话</td>
+                                                    <td class="col-md-10">
+                                                        <input type="text" placeholder="电话" class="col-md-3"
+                                                               name="invoicePhone" ng-model="factory.vatInvoice.phone"/>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-class="{'has-error':Form.bankName.$dirty && Form.bankName.$invalid, 'has-success':Form.bankName.$valid}">
+                                                    <td class="col-md-2">银行</td>
+                                                    <td class="col-md-10">
+                                                        <input type="text" placeholder="银行" class="col-md-3"
+                                                               name="bankName" ng-model="factory.vatInvoice.bankName"/>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-class="{'has-error':Form.bankAccount.$dirty && Form.bankAccount.$invalid, 'has-success':Form.bankAccount.$valid}">
+                                                    <td class="col-md-2">账号</td>
+                                                    <td class="col-md-10">
+                                                        <input type="text" placeholder="账号" class="col-md-3"
+                                                               name="bankAccount" ng-model="factory.vatInvoice.account"/>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="row" ng-if="action !== 'info'">
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-ask-primary" ng-click="form.submit(Form)">保存
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!--end: 添加活动表单-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end: 活动管理-->
+</div>
+
+
+

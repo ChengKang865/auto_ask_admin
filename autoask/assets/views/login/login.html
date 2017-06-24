@@ -1,0 +1,54 @@
+<!-- start: LOGIN -->
+<div class="row">
+    <div class="main-login col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+        <div class="logo">
+            <img ng-src="{{app.layout.logo}}" alt="{{app.name}}"/>
+        </div>
+        <!-- start: LOGIN BOX -->
+        <div class="box-login" ng-controller="loginCtrl">
+            <div class="form-login" cg-busy="{promise:loadingPromise}">
+                <fieldset>
+                    <legend>
+                        登录您的账户
+                    </legend>
+                    <p>
+                    </p>
+
+                    <div class="form-group">
+						<span class="input-icon">
+							<input type="text" class="form-control" name="phone" placeholder="手机号码" ng-model="phone">
+							<i class="fa fa-user"></i> </span>
+                    </div>
+                    <div class="form-group form-actions position-relative">
+						<span class="input-icon">
+							<input type="password" class="form-control password" name="code" placeholder="密码"
+                                   ng-model="code">
+							<i class="fa fa-lock"></i>
+							<a href="javascript:;" class="btn btn-primary btn-send-verification-code" ng-click="sendMsg()">获取验证码</a>
+                        </span>
+                    </div>
+                    <input type="text" name="loginType" ng-model="loginType" style="display: none;" ng-init="loginType = 'staff'"/>
+
+                    <div class="form-actions">
+                        <div class="checkbox clip-check check-primary">
+                            <input type="checkbox" id="rememberFlag" name="rememberFlag" ng-model="rememberFlag" ng-init="rememberFlag = true">
+                            <label for="rememberFlag">
+                                记录我的登录
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary pull-right" ng-click="login()">
+                            登录 <i class="fa fa-arrow-circle-right"></i>
+                        </button>
+                    </div>
+                </fieldset>
+            </div>
+            <!-- start: COPYRIGHT -->
+            <div class="copyright">
+                {{app.year}} &copy; {{ app.name }} by {{ app.author }}.
+            </div>
+            <!-- end: COPYRIGHT -->
+        </div>
+        <!-- end: LOGIN BOX -->
+    </div>
+</div>
+<!-- end: LOGIN -->

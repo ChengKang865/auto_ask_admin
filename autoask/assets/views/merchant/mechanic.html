@@ -1,0 +1,130 @@
+<!-- start: PAGE TITLE -->
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">维修工</h1>
+            <span class="mainDescription">autoask的用户可以在服务店找维修工人进行维修服务</span>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+
+<!-- start: 合作伙伴列表 -->
+<div class="container-fluid container-fullw" ng-controller="mechanicListCtrl">
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+        <div class="row margin-bottom-15">
+            <div class="col-md-2">
+                <label for="phone">
+                    手机号码
+                </label>
+                <input type="text" placeholder="不限" id="phone" class="form-control" name="phone" ng-model="criteria.phone"/>
+            </div>
+
+            <div class="col-md-3 padding-left-0">
+                <label for="serviceProvider">
+                    服务店
+                </label>
+                <select class="form-control" id="serviceProvider" name="serviceProvider"
+                        ng-model="criteria.serviceProviderId">
+                    <option value="">不限</option>
+                    <option ng-repeat="sp in serviceProviders" value="{{sp.id}}">{{sp.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-2 padding-left-0">
+                <label for="name">
+                    维修工名称
+                </label>
+                <input type="text"  id="name" class="form-control" name="name" ng-model="criteria.name"/>
+            </div>
+
+            <div class="col-md-1" style="margin-top: 22px">
+                <button class="btn btn-wide btn-ask-primary" ng-click="query()"><i class="fa fa-find"></i>查询</button>
+            </div>
+        </div>
+
+        <div class="row margin-bottom-15">
+            <div class="pull-right">
+                <button class="btn btn-wide btn-ask-primary" ng-click="add()"><i class="fa fa-plus"></i>添加维修工</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="table-responsive">
+                <table ng-table="tableParams" class="table" cg-busy="{promise:loadingPromise}">
+                    <tbody ng-repeat="p in data">
+                    <tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+                        <td class="rowTd" data-title="'姓名'">{{p.name}}</td>
+                        <td class="rowTd" data-title="'性别'">{{p.gender}}</td>
+                        <td class="rowTd" data-title="'年龄'">{{p.age}}</td>
+                        <td class="rowTd" data-title="'工种'">{{p.workType | workTypeZh }}</td>
+                        <td class="rowTd" data-title="'手机号'">{{p.phone}}</td>
+                        <td class="rowTd" data-title="'状态'">{{p.activated | activeStatusZh}}</td>
+                        <td class="rowTd text-right">
+                            <a href="javascript:;" class="btn btn-ask-view btn-sm" ng-if="!p.activated"
+                               ng-click="displayActiveCode()">激活</a>
+                            <a href="javascript:;" class="btn btn-ask-view btn-sm" ng-if="p.activated"
+                               ng-click="displayActiveCode()">重新激活</a>
+                        </td>
+                        <td class="rowTd text-right">
+                            <input type=button class="btn btn-ask-view btn-sm" id="viewRowBtn{{p.id}}"
+                                   value="详情" ng-click="info(p.id)">
+                        </td>
+                        <td class="rowTd text-right">
+                            <input type=button class="btn btn-ask-modify btn-sm" id="editRowBtn{{p.id}}"
+                                   value="修改" ng-click="edit(p.id)">
+                        </td>
+                        <td class="rowTd text-right">
+                            <input type=button class="btn btn-ask-del btn-sm" id="delRowBtn{{p.id}}"
+                                   value="删除" ng-click="delete(p.id)">
+                        </td>
+                        <td class="rowTd text-right">
+                            <input type=button class="btn btn-ask-modify btn-sm" value="绑定二维码"
+                                   ng-click="displayQRCode(p.id)">
+                        </td>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!--start: 模态输入框-->
+    <div class="prompt-container" ng-class="{'show': qrShowFlag, 'hide': !qrShowFlag}">
+        <div class="panel panel-white no-radius autoask-pannel">
+            <div class="panel-heading text-left">绑定二维码</div>
+            <div class="panel-body">
+                <input placeholder="二维码" type="text" class="form-control" ng-model="qrCode"/>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <button type="button" class="btn btn-wide btn-ask-primary" ng-click="bindQRCode()">确认</button>
+                    <button type="button" class="btn btn-wide btn-ask-primary" ng-click="hideQRCode()">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end: 模态输入框-->
+
+    <!--start: 二维码弹窗-->
+    <div id="qr-code-moal" class="modal fade autoask-madal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">激活</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <p><img ng-src="{{activeUrl}}" alt=""/></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ask-primary">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end: 二维码弹窗-->
+</div>
+
+<!-- end: 合作伙伴列表 -->
