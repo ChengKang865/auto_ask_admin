@@ -1,6 +1,9 @@
 'use strict';
 
 /**
+ *
+ *
+ *
  * Config constant
  */
 app.constant('APP_MEDIAQUERY', {
