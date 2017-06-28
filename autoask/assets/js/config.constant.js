@@ -10,6 +10,7 @@ app.constant('APP_MEDIAQUERY', {
     'mobile': 480
 });
 //var AUTOASK_HOST = '127.0.0.1:8087/autoask';
+
 var AUTOASK_HOST = 'www.autoask.com/autoask';
 
 var ACTIVE_URL = "oizq85p8q.bkt.clouddn.com/active.png";
