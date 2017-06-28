@@ -617,7 +617,15 @@ app.factory('autoaskService', function (restProxyService, autoaskProvider, commo
         getWeiXinUserInfoList: function (params, success, error) {
             return _get(autoaskProvider, '/weixin/userInfo/list/', params, success, error);
         },
-
+		 getMassList: function (params, success, error) {
+                return _get(autoaskProvider, '/weixin/mass/tagsInfoList/', params, success);
+           		 },
+            getMaterialList: function (params, success, error) {
+                return _post(autoaskProvider, '/weixin/mass/materialList/', params, success, error);
+           		 },
+            submitForMass:function (params, success, error) {
+                return _post(autoaskProvider, '/weixin/mass/massNews/', params, success, error);
+          		 },
         // ---------------------------- 登陆服务 -----------------------------
 
         updatePassword: function (params, success, error) {

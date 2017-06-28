@@ -149,6 +149,7 @@ app.constant('JS_REQUIRES', {
         //微信管理
         'qrCodeInfoListCtrl': 'assets/js/controllers/wx/qrCodeInfoListCtrl.js',
         'userInfoListCtrl': 'assets/js/controllers/wx/userInfoListCtrl.js',
+        'massListCtrl': 'assets/js/controllers/wx/massListCtrl.js',
 
 
         //*** Services

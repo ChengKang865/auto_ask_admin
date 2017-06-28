@@ -912,6 +912,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$com
                 label: '微信用户列表'
             },
             resolve: loadSequence('userInfoListCtrl')
+        }).state('app.wx.massList', {
+            url: '/massList/',
+            templateUrl: 'assets/views/wx/mass_list.html',
+            title: '微信群发列表',
+            ncyBreadcrumb: {
+                label: '微信群发列表'
+            },
+            resolve: loadSequence('massListCtrl')
         })
 
 
