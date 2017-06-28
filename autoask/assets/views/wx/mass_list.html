@@ -1,0 +1,230 @@
+<!-- start: PAGE TITLE -->
+<style>
+    .padding-0{
+        padding:0;
+    }
+    .tab-ul>li{
+        height: 34px;
+        line-height: 34px;
+        display: inline-block;
+    }
+    ul{
+        margin:0;
+        padding:0;
+    }
+    ul>li{
+        list-style: none;
+
+    }
+    #tabShow li:nth-child(odd){
+        background-color: #d6d6d6 !important;
+    }
+    #tabShow li:nth-child(even){
+        background-color: #f0f0f0 !important;
+    }
+    center{
+        text-align: center;
+    }
+    .beActive{
+        background-color: #e0c318;
+    }
+    .height{
+        height: 100px;
+    }
+    .line-height{
+        line-height: 100px;
+    }
+    .transform{
+        transform: scale(1.3);
+        -webkit-transform: scale(1.3);
+        -ms-transform: scale(1.3);
+        -moz-transform: scale(1.3);
+        -o-transform: scale(1.3);
+
+
+    }
+    .float-right{
+        float: right;!important;
+        text-align: center;
+    }
+    .hover-rotate:hover{
+        animation:rotate 0.4s;
+        -webkit-animation:rotate 0.4s; /* Safari and Chrome */
+        background-color: #e2191c;
+        color: #ffffff;
+
+    }
+
+
+    .btnBgc{
+        background-color:#e0c318!important;
+    }
+    .font-20{
+        font-size: 20px;
+    }
+    .font-size{
+        font-size: 20px
+    }
+    .bgc-fff{
+        background-color: #fff!important;
+    }
+
+</style>
+<!--<div   class="background-color"></div>-->
+
+<section id="page-title">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="mainTitle">微信群发管理</h1>
+        </div>
+        <div ncy-breadcrumb></div>
+    </div>
+</section>
+<!-- end: PAGE TITLE -->
+<div style="height: 700px" class="container-fluid container-full" ng-controller="massListCtrl">
+
+    <div class="container-fluid container-full" cg-busy="{promise:loadingPromise}">
+
+        <fieldset style="height: 600px">
+            <legend style="color: #383838;"> 微信群发</legend>
+            <div class="container">
+                <div class="row">
+                    <div   class="col-xs-2 col-lg-2 font-20 padding-0">群发类型 : </div>
+                    <!--<div class="col-xs-2">{{valueForMaterial}}</div>-->
+                </div>
+
+                <div class="row">
+                    <div style="float: left ;margin-top: 2%;padding-left: 2.5%;" class="col-lg-3 col-xs-3 padding-0">
+                        <!--ng-change="toggleModel(sendMsg)"-->
+                        <select ng-change="toggleMassType(sendMsg)"  style="width: 230px" ng-model="sendMsg">
+                            <option value="">群发类型</option>
+                            <!--<option>quanfa</option>-->
+                            <option  value="{{val}}" ng-class="" ng-repeat="val in tagsInfoList">{{val.name}}（{{val.count}}）</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div style="margin-top: 20px"  class="row">
+                    <div   class="col-xs-2 col-lg-2 font-20 padding-0">群发内容：</div>
+                    <div  class="col-xs-8 col-lg-8"> </div>
+                    <div  class="col-xs-2 col-lg-2"><button   ng-click="toggleModel()" class="btn  btn-primary">获取内容</button></div>
+                </div>
+
+                <!--获取内容-->
+                <div ng-if="showTab !=='text' "  class="row">
+                    <div class="col-xs-3 height padding-0"><img style="width: 60%;height:80%;margin-top: 4%;margin-left: 10%;border: 1px solid #999;" src="{{valueForMaterial.name.url||valueForMaterial.name.list[0].thumbUrl}}" alt="请选择群发内容"></div>
+                    <div class="col-xs-3 height padding-0 line-height">素材的类型:{{materialName(valueForMaterial.name.type)}}（{{valueForMaterial.name.type||'请选择'}}）</div>
+                    <div style="text-align: center" class="col-xs-4 height line-height padding-0">{{getLocalTime(valueForMaterial.name.updateTime)||'创建时间'}}</div>
+                    <div  class="col-xs-2 height line-height padding-0"><input class=" btn   btn-warning" ng-click="cancel()" style="margin-left:16px ;" name="img" value="取消内容" type="button"></div>
+                </div>
+                <div style="margin-top: 10px;" ng-if="showTab ==='text'">
+                    <textarea name="" readonly="readonly"  style="width: 90%;height: 280px;"> {{textarea}}</textarea>
+                </div>
+                <div  ng-if="showTab !=='text' "  style="margin-top:220px; " class="row">
+                    <div class="col-xs-5"></div>
+                    <div class="col-xs-2"> <button style="float: right;margin-right:13% " ng-click="submit()"  class='btn btn-success'>提交</button></div>
+                    <div class="col-xs-5"></div>
+
+                </div>
+                <div  ng-if="showTab ==='text' "  style="margin-top:60px; " class="row">
+                    <div class="col-xs-5"></div>
+                    <div class="col-xs-2"> <button style="text-align: center" ng-click="submit()"  class='btn btn-success'>提交</button></div>
+                    <div class="col-xs-5"></div>
+
+                </div>
+            </div>
+        </fieldset>
+
+
+        <!--model 模态框（Modal）-->
+        <div ng-if="mass" ng-click="toggleModel()" style="opacity: .7; position: absolute; background-color: #e2e2e2;width: 120%;height:130%;z-index:5;margin-top: -800px;margin-left: -30px;"></div>
+
+        <div ng-show="mass" style="border-radius: 10px; position: absolute;width: 95%;height: 110%;background-color: #ffffff;z-index: 8;margin-top: -700px;" >
+            <div class="container-flui12rd container-full">
+                <div style="margin: 40px 0; color: #0d0d0d;" class="row">
+                    <!--tab  开始-->
+                    <div style="font-size: 16px;" class="col-xs-6">
+                        <ul id="tab" class="tab-ul">
+                            <li ng-class="{beActive:showTab==='image'}" ng-click="changeTab('image')" class="col-xs-2 center">图片</li>
+                            <li ng-class="{beActive:showTab==='news'}" ng-click="changeTab('news')" class="col-xs-2 center padding-0">图文消息</li>
+                            <li ng-class="{beActive:showTab==='text'}" ng-click="changeTab('text')" class="col-xs-2 center ">文本</li>
+                        </ul>
+                        <!--tab  结束-->
+                    </div>
+
+                    <div class="col-xs-6">
+                        <div class="row">
+                            <div class="col-xs-11"></div>
+                            <div ng-click="toggleModel()" style=" width: 20px;padding: 1px;text-align: center;" class="col-xs-1 hover-rotate">X</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- tab内容切换显示区域-->
+                <ul style="height: 500px" id="tabShow">
+                    <li  ng-if="showTab==='image'||showTab==='news'">
+                        <div class="col-xs-3 font-size">图片</div>
+                        <div class="col-xs-3 font-size">名称</div>
+                        <div class="col-xs-3 font-size center">日期</div>
+                        <div  style="text-align: right;"  class="col-xs-3 font-size  ">选择</div>
+                    </li>
+                    <br><br>
+                    <li style=" " ng-if="showTab==='image'"  ng-repeat="val in MeterialResult" >
+                        <div  class="row" >
+                            <div  style="text-align: center;" class="col-xs-3 height padding-0; padding:5px;">
+                                <p style="text-align: center;"><img  style=" width: 70%;height: 90px;  margin-top: 5px;" src="{{val.url}}" alt=""></p>
+                            </div>
+                            <div class="col-xs-3 height line-height">{{val.name}}</div>
+                            <div style="text-align: center" class="col-xs-3 height line-height padding-0">{{getLocalTime(val.updateTime)}}</div>
+                            <!--<div class="col-xs-2 height line-height padding-0"></div>-->
+                            <div  class="col-xs-3 height line-height padding-0">
+                                <input class="transform"  ng-value="val"  style="float: right;margin:13% 13% 0 0" ng-model="valueForMaterial.name" name="img" type="radio"></div>
+                            <!--<div class="col-xs-2 height line-height padding-0">26</div>-->
+                        </div>
+                    </li>
+                    <!--start  图文消息-->
+
+                    <li style=" " ng-if="showTab==='news'" ng-repeat="val in MeterialResult">
+                        <div  class="row" >
+                            <div  style="text-align: center;" class="col-xs-3 height padding-0; padding:5px;">
+                                <p style="text-align: center;"><img  style=" width: 70%;height: 90px;  margin-top: 5px;" src="{{val.list[0].thumbUrl}}" alt=""></p>
+                            </div>
+                            <div style="overflow: hidden" class="col-xs-3 height line-height">{{val.list[0].digest}}</div>
+                            <div style="text-align: center" class="col-xs-3 height line-height padding-0">{{getLocalTime(val.updateTime)}}</div>
+                            <!--<div class="col-xs-2 height line-height padding-0"></div>-->
+                            <div  class="col-xs-3 height line-height padding-0">
+                                <input class="transform"  style="float: right;margin:13% 20% 0 0"
+                                       ng-model="valueForMaterial.name" name="news"  ng-value="val"    type="radio">
+                            </div>
+                            <!--<div class="col-xs-2 height line-height padding-0">26</div>-->
+                        </div>
+                    </li>
+                    <!--end 图文消息 -->
+
+                    <!--start 文本 -->
+                    <li class="bgc-fff" ng-show="showTab==='text'">
+
+                        <h4 style="padding-top: 20px;margin-left: 4%">文本内容：</h4>
+                        <!--<div style="background: #fff;margin: 20px;" class="row"><div style="font-size: 20px;" class="col-xs-2">文本内容：</div></div>-->
+                        <!--<div>  </div>-->
+                        <textarea  placeholder="请输入你要发送的文本内容" style="width: 90%;height:360px;margin: 20px 4%;"
+                                   name="" id="" ng-model="textarea" ></textarea>
+                        <!--<input style="opacity: .7" ng-model="choiced" ng-click="textToMass()" type="checkbox">-->
+                    </li>
+                    <!--end 文本-->
+                </ul>
+
+                <!-- tab切换显示区域结束-->
+
+            </div>
+            <div  style="position: relative; margin-top: 90px; bottom: 45px; ">
+                <span  style="margin-left: 5px"  ng-if="total>currentCount">
+                    <button  ng-class="{btnBgc:p===currentClickPage}" ng-click="changePage(pageList[0],p)" style="margin-right: 5px" type="button" class="btn" ng-repeat="p in pageList" ng-if="$index>0 && showTab !=='text'" >{{p}}</button>
+                </span>
+                <button style="float: right; margin-right: 30px" class="btn btn-primary " ng-click="makeSure()">确定</button>
+            </div>
+        </div>
+        <!--&lt;!&ndash;modelEND&ndash;&gt;&lt;!&ndash; 模态框（Modal） &ndash;&gt;-->
+
+    </div>
+</div>
+
